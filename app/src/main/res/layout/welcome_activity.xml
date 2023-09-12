@@ -8,9 +8,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         android:paddingBottom="0dp">
 
 
@@ -19,17 +42,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="Welcome, "
+            android:text="Welcome,"
             android:textColor="#AA7676"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:text="Umer "
+            android:paddingLeft="15dp"
+            android:text="Umer"
             android:textColor="#CDDC39"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
 
@@ -53,7 +76,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
 
 
             <TextView
@@ -62,6 +87,7 @@
                 android:text="Featured Items"
                 android:textSize="20dp"
                 android:paddingTop="5dp"
+                android:textStyle="bold"
                 android:paddingLeft="20dp"
                 android:layout_marginTop="10dp"
                 />
@@ -81,7 +107,8 @@
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
@@ -147,7 +174,8 @@
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
@@ -213,7 +241,8 @@
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
@@ -286,6 +315,7 @@
                 android:textSize="20dp"
                 android:paddingTop="5dp"
                 android:paddingLeft="20dp"
+                android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 />
 
@@ -297,65 +327,61 @@
                     android:layout_width="400dp"
                     android:layout_height="200dp"
                     android:orientation="horizontal"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="10dp">
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp">
 
                     <RelativeLayout
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
                         <ImageView
                             android:layout_width="170dp"
                             android:layout_height="100"
-                            tools:srcCompat="@tools:sample/avatars"
                             android:scaleX="2"
-                            />
+                            tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="120dp"
+                            android:paddingLeft="10dp"
                             android:text="Item Name"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:textSize="15dp"
-                            />
+                            android:textSize="15dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="120dp"
+                            android:paddingRight="10dp"
                             android:text="10$/hr"
-                            android:layout_marginTop="120dp"
-                            android:layout_alignParentRight="true"
-                            android:textSize="15dp"
                             android:textColor="#CDDC39"
-                            android:textStyle="bold"
-                            android:paddingRight="10dp"
-                            />
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Islamabad"
-                            android:layout_marginTop="145dp"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
-                            />
+                            android:text="Islamabad"
+                            android:textSize="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7th Mar"
-                            android:layout_marginTop="145dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
                             android:paddingRight="10dp"
-                            />
+                            android:text="7th Mar"
+                            android:textSize="10dp" />
 
                         <ImageView
 
@@ -366,62 +392,59 @@
 
 
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
                         <ImageView
                             android:layout_width="170dp"
                             android:layout_height="100"
-                            tools:srcCompat="@tools:sample/avatars"
                             android:scaleX="2"
-                            />
+                            tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="120dp"
+                            android:paddingLeft="10dp"
                             android:text="Item Name"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:textSize="15dp"
-                            />
+                            android:textSize="15dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="120dp"
+                            android:paddingRight="10dp"
                             android:text="10$/hr"
-                            android:layout_marginTop="120dp"
-                            android:layout_alignParentRight="true"
-                            android:textSize="15dp"
                             android:textColor="#CDDC39"
-                            android:textStyle="bold"
-                            android:paddingRight="10dp"
-                            />
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Islamabad"
-                            android:layout_marginTop="145dp"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
-                            />
+                            android:text="Islamabad"
+                            android:textSize="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7th Mar"
-                            android:layout_marginTop="145dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
                             android:paddingRight="10dp"
-                            />
+                            android:text="7th Mar"
+                            android:textSize="10dp" />
 
                         <ImageView
 
@@ -432,62 +455,57 @@
 
 
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
-                        >
+                        android:background="#EAE3E3">
 
 
                         <ImageView
                             android:layout_width="170dp"
                             android:layout_height="100"
-                            tools:srcCompat="@tools:sample/avatars"
                             android:scaleX="2"
-                            />
+                            tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="120dp"
+                            android:paddingLeft="10dp"
                             android:text="Item Name"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:textSize="15dp"
-                            />
+                            android:textSize="15dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="120dp"
+                            android:paddingRight="10dp"
                             android:text="10$/hr"
-                            android:layout_marginTop="120dp"
-                            android:layout_alignParentRight="true"
-                            android:textSize="15dp"
                             android:textColor="#CDDC39"
-                            android:textStyle="bold"
-                            android:paddingRight="10dp"
-                            />
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Islamabad"
-                            android:layout_marginTop="145dp"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
-                            />
+                            android:text="Islamabad"
+                            android:textSize="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7th Mar"
-                            android:layout_marginTop="145dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginTop="145dp"
                             android:paddingLeft="10dp"
-                            android:textSize="10dp"
                             android:paddingRight="10dp"
-                            />
+                            android:text="7th Mar"
+                            android:textSize="10dp" />
 
                         <ImageView
 
@@ -502,6 +520,7 @@
                 </LinearLayout>
 
             </HorizontalScrollView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -510,6 +529,7 @@
                 android:paddingTop="5dp"
                 android:paddingLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:textStyle="bold"
                 />
 
             <HorizontalScrollView
@@ -527,7 +547,8 @@
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
@@ -540,23 +561,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Item Name"
                             android:layout_marginTop="120dp"
                             android:paddingLeft="10dp"
-                            android:textSize="15dp"
-                            />
+                            android:text="Item Name"
+                            android:textSize="15dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10$/hr"
-                            android:layout_marginTop="120dp"
                             android:layout_alignParentRight="true"
-                            android:textSize="15dp"
-                            android:textColor="#CDDC39"
-                            android:textStyle="bold"
+                            android:layout_marginTop="120dp"
                             android:paddingRight="10dp"
-                            />
+                            android:text="10$/hr"
+                            android:textColor="#CDDC39"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -593,7 +612,8 @@
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3"
+                        android:background="@drawable/rounded_corners_textfields"
+
                         >
 
 
@@ -740,10 +760,10 @@
         <ImageView
             android:id="@+id/imageView0"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="55"
             android:layout_marginLeft="22dp"
             android:paddingTop="20dp"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:src="@drawable/home_icn"/>
 
         <TextView
             android:layout_width="60dp"
@@ -756,7 +776,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:layout_marginLeft="92dp"
+            android:layout_marginLeft="85dp"
             android:paddingTop="20dp"
             app:srcCompat="@android:drawable/ic_search_category_default" />
 
@@ -773,7 +793,7 @@
             android:layout_height="55dp"
             android:layout_marginLeft="262dp"
             android:paddingTop="20dp"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:src="@drawable/chat_icn"/>
 
         <TextView
             android:layout_width="60dp"
@@ -786,9 +806,9 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:layout_marginLeft="332dp"
+            android:layout_marginLeft="335dp"
             android:paddingTop="20dp"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
+            android:src="@drawable/profile_icn"/>
 
         <TextView
             android:layout_width="60dp"
@@ -799,12 +819,12 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="55dp"
-            android:layout_height="135dp"
-            android:layout_marginLeft="172dp"
+            android:layout_width="45dp"
+            android:layout_height="105dp"
+            android:layout_marginLeft="178dp"
             android:paddingTop="0dp"
-            android:scaleX="2"
-            app:srcCompat="@android:drawable/ic_menu_compass" />
+            android:scaleX="1"
+            android:src="@drawable/pls_icn"/>
 
 
 

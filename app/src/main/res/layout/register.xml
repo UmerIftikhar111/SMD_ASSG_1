@@ -4,11 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="130dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_android_black_24dp" />
+        android:src="@drawable/img" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -42,11 +66,12 @@
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="#EAE1E1"
+            android:background="@drawable/rounded_corners_textfields"
             android:hint="Enter Name"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:textSize="30dp"
+
 
             />
 
@@ -65,7 +90,7 @@
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="#EAE1E1"
+            android:background="@drawable/rounded_corners_textfields"
             android:hint="Enter Email"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -88,7 +113,7 @@
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="#EAE1E1"
+            android:background="@drawable/rounded_corners_textfields"
             android:hint="Enter Contact Number"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -112,9 +137,10 @@
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="#EAE1E1"
+            android:background="@drawable/rounded_corners_textfields"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
             android:textSize="30dp"
 
             />
@@ -135,11 +161,11 @@
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="#EAE1E1"
+            android:background="@drawable/rounded_corners_textfields"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:textSize="30dp"
-
+            android:spinnerMode="dropdown"
             />
 
         <Button
@@ -147,7 +173,8 @@
             android:layout_height="80dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:background="#9C27B0"
+            android:backgroundTint="#FF9800"
+            android:background="@drawable/rounded_corners_buttons"
             android:text="Sign Up"
             android:textColor="@color/white" />
 

@@ -8,24 +8,47 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="20dp">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="<-"
-            android:textColor="#AA7676"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:paddingTop="10dp"
+            android:src="@drawable/back_arrow_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
+            android:paddingTop="10dp"
             android:text="Makena Dias"
             android:textColor="#AA7676"
             android:textSize="25dp"
@@ -89,8 +112,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:background="#DFCDCD"
-                    android:padding="5dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
                     android:text="sample message"
                     android:textColor="#35546C"
                     android:textSize="18dp"
@@ -164,8 +187,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:background="#DFCDCD"
-                    android:padding="5dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
                     android:text="sample message"
                     android:textColor="#35546C"
                     android:textSize="18dp"
@@ -206,8 +229,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:background="#DFCDCD"
-                    android:padding="5dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
                     android:text="sample message"
                     android:textColor="#35546C"
                     android:textSize="18dp"
@@ -236,7 +259,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="2dp"
         android:background="#CDB5B5"
         />
 
@@ -244,7 +267,7 @@
         android:layout_width="400dp"
         android:layout_height="50dp"
         android:hint="Write a Reply.."
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
 
@@ -258,28 +281,28 @@
         >
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="33dp"
             android:paddingTop="8dp"
             app:srcCompat="@android:drawable/ic_menu_camera"
             android:paddingLeft="10dp"
             />
 
         <ImageView
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="33dp"
         android:paddingTop="8dp"
         android:paddingLeft="10dp"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@android:drawable/ic_input_get"
 
         />
 
         <ImageView
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="33dp"
         android:paddingTop="8dp"
         android:paddingLeft="10dp"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@android:drawable/ic_menu_crop"
 
         />
 
@@ -288,9 +311,10 @@
             android:layout_height="40dp"
             android:text="Send"
             android:textSize="25dp"
-            android:layout_marginLeft="180dp"
-            android:textColor="#CDDC39"
-            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="230dp"
+            android:textColor="#FF9800"
+            android:layout_marginTop="0dp"
             />
 
     </LinearLayout>

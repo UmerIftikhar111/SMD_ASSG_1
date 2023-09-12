@@ -6,19 +6,41 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="20dp">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="<-"
-            android:textColor="#AA7676"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:paddingTop="10dp"
+            android:src="@drawable/back_arrow_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,7 +104,7 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="bottom"
-                android:background="#9C27B0"
+                android:background="@drawable/rounded_corners_buttons"
                 android:text="Submit Report"
                 android:layout_marginTop="380dp"
                 android:textColor="@color/white" />

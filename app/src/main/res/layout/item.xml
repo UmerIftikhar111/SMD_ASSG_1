@@ -7,6 +7,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="10dp"
@@ -37,6 +61,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CDB5B5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="153dp"
         android:background="@color/white"
         >
@@ -60,8 +89,8 @@
 
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="693dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,9 +105,7 @@
                 android:orientation="horizontal"
 
 
-
                 />
-
 
 
             <TextView
@@ -151,7 +178,6 @@
                 />
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -178,11 +204,11 @@
             <Button
                 android:layout_width="360dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="20dp"
                 android:layout_gravity="bottom"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="80dp"
                 android:background="#9C27B0"
                 android:text="Post Item"
-                android:layout_marginTop="80dp"
                 android:textColor="@color/white" />
 
 

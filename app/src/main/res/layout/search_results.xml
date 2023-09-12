@@ -8,19 +8,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="0dp">
+        android:layout_height="24dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
             android:paddingLeft="20dp"
-            android:text="<-"
-            android:textColor="#AA7676"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:src="@drawable/back_arrow_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +64,7 @@
 
 
     <LinearLayout
-        android:layout_width="380dp"
+        android:layout_width="410dp"
         android:layout_height="70dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -60,9 +81,9 @@
 
         <Spinner
             android:layout_width="160dp"
-            android:layout_height="50dp"
-            android:background="#E3CFCF"
-            android:layout_marginLeft="80dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:layout_marginLeft="70dp"
             />
 
 

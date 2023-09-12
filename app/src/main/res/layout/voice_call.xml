@@ -10,8 +10,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="484dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:background="#E3C9C9">
 
         <RelativeLayout
@@ -85,7 +109,7 @@
 
         <ImageView
             android:layout_width="30dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/btn_star" />
 
