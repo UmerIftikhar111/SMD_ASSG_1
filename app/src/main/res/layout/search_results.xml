@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="<-"
+            android:textColor="#AA7676"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="Search Results"
+            android:textColor="#AA7676"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CDB5B5" />
+
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" ''Some Item'' "
+            android:textSize="25dp"
+            android:paddingTop="20dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:background="#E3CFCF"
+            android:layout_marginLeft="80dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp">
+
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="15dp"
+            android:background="#EAE3E3"
+            >
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="100"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleX="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_marginTop="120dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10$/hr"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Islamabad"
+                android:layout_marginTop="145dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7th Mar"
+                android:layout_marginTop="145dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:textSize="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="145dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

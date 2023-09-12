@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CaptureActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="484dp"
+        android:layout_marginTop="40dp"
+        android:background="#E3C9C9">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Caller Name"
+                android:textSize="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:text="00:45"
+                android:textSize="25dp" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="70dp"
+        android:layout_height="6dp"
+        android:background="#CDB5B5"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_star" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>
