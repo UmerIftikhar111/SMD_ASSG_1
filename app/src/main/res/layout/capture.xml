@@ -43,15 +43,25 @@
             android:layout_height="60dp"
             android:orientation="horizontal"
             android:paddingTop="10dp"
-            android:weightSum="1">
-
+            android:weightSum="3">
 
             <ImageView
-                android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/capture_icon_set_2"/>
+                android:src="@drawable/cross_capture"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/sun_capture"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/timer_capture"/>
 
 
         </LinearLayout>
@@ -64,15 +74,28 @@
         android:layout_marginLeft="0dp"
         android:orientation="horizontal"
         android:paddingTop="20dp"
-        android:weightSum="1">
-
+        android:weightSum="3">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="80dp"
             android:layout_weight="1"
             android:scaleX="1"
-            android:src="@drawable/capture_icon_set"/>
+            android:src="@drawable/view_gallery"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleX="1"
+            android:src="@drawable/take_picture"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleX="1"
+            android:src="@drawable/refresh_gallery"/>
 
 
     </LinearLayout>
@@ -81,25 +104,25 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="90dp"
         android:paddingTop="8dp"
         android:weightSum="2">
 
         <Button
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:background="#CDDC39"
             android:text="Photo"
+            android:backgroundTint="#FF9800"
             android:textSize="20dp"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"  />
-        <Button
+        <TextView
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:background="@color/white"
             android:text="Video"
             android:layout_marginLeft="20dp"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:layout_marginBottom="10dp" />
 

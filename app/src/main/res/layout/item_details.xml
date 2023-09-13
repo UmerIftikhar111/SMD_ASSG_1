@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:src="@drawable/back_arrow_icon"/>
 
         <TextView
@@ -226,7 +226,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_corners_buttons"
                 android:text="Rent it"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="25dp"/>
 
         </RelativeLayout>
 

@@ -112,7 +112,8 @@
             android:backgroundTint="#FF9800"
             android:background="@drawable/rounded_corners_buttons"
             android:text="Login"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="25dp"/>
 
 
 
