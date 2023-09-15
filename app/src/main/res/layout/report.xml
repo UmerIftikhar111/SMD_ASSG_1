@@ -36,6 +36,7 @@
         android:paddingBottom="20dp">
 
         <ImageView
+            android:id="@+id/nav_back_to_item_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -46,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
+            android:paddingTop="10dp"
             android:text="Report"
             android:textColor="#AA7676"
             android:textSize="25dp"
@@ -107,6 +109,7 @@
                 android:background="@drawable/rounded_corners_buttons"
                 android:text="Submit Report"
                 android:layout_marginTop="380dp"
+                android:textSize="25dp"
                 android:textColor="@color/white" />
 
 

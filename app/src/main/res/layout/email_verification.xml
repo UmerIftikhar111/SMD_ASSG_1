@@ -79,7 +79,7 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
-                android:text="Reasons for reporting"
+                android:text="Enter Pin"
                 android:textColor="#35546C"
                 android:textSize="25dp"
                 android:textStyle="bold" />

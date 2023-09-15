@@ -17,35 +17,23 @@ public class MainActivity extends AppCompatActivity {
 
         // nav text view
         TextView registerTextView = findViewById(R.id.navigate_to_register);
-        registerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle the click event here, e.g., navigate to the register.xml screen
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        registerTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
         // forgot pwd text view
         TextView forgotPwdTextView = findViewById(R.id.forgotPassword);
-        forgotPwdTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle the click event here, e.g., navigate to the register.xml screen
-                Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
+        forgotPwdTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
         });
 
         //btn
         Button loginBtn = findViewById(R.id.login_btn);
-        registerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle the click event here, e.g., navigate to the register.xml screen
-                Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
-                startActivity(intent);
-            }
+        registerTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
+            startActivity(intent);
         });
 
     }

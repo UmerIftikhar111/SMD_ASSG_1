@@ -99,6 +99,7 @@
             android:src="@drawable/refresh_gallery"/>
 
         <ImageView
+            android:id="@+id/end_video_call"
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"

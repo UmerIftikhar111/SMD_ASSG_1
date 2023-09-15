@@ -91,6 +91,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/nav_to_item1Details"
                     android:layout_width="40dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="20dp"
@@ -168,7 +169,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="83dp"
+                android:layout_height="78dp"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="140dp"
                 android:orientation="horizontal">
@@ -180,22 +181,22 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView0"
+                    android:id="@+id/homeIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:layout_marginLeft="22dp"
                     android:paddingTop="20dp"
-                    android:src="@drawable/home_icn" />
+                    android:src="@drawable/home_icn"/>
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/imageView0"
+                    android:text="Home"
                     android:layout_marginLeft="20dp"
-                    android:text="Home" />
+                    android:layout_below="@+id/homeIcon"/>
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/searchItems"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:layout_marginLeft="85dp"
@@ -205,48 +206,48 @@
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/imageView"
+                    android:text="Search"
                     android:layout_marginLeft="90dp"
-                    android:text="Search" />
+                    android:layout_below="@+id/searchItems"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/chat"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:layout_marginLeft="262dp"
                     android:paddingTop="20dp"
-                    android:src="@drawable/chat_icn" />
+                    android:src="@drawable/chat_icn"/>
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/imageView2"
+                    android:text="Chat"
                     android:layout_marginLeft="262dp"
-                    android:text="Chat" />
+                    android:layout_below="@+id/chat"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/profile"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:layout_marginLeft="335dp"
                     android:paddingTop="20dp"
-                    android:src="@drawable/profile_icn" />
+                    android:src="@drawable/profile_icn"/>
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/imageView3"
+                    android:text="Profile"
                     android:layout_marginLeft="332dp"
-                    android:text="Profile" />
+                    android:layout_below="@+id/profile"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/addItem"
                     android:layout_width="45dp"
                     android:layout_height="105dp"
                     android:layout_marginLeft="178dp"
                     android:paddingTop="0dp"
                     android:scaleX="1"
-                    android:src="@drawable/pls_icn" />
+                    android:src="@drawable/pls_icn"/>
 
 
             </RelativeLayout>

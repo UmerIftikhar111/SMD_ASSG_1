@@ -15,12 +15,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // nav text view
         TextView registerTextView = findViewById(R.id.navigate_to_login_from_forgot_pwd);
-        registerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        registerTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
+            startActivity(intent);
         });
 
     }

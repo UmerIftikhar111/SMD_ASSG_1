@@ -38,6 +38,7 @@
         android:paddingBottom="10dp">
 
         <ImageView
+            android:id="@+id/navigate_to_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -100,7 +101,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
@@ -166,7 +167,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
@@ -239,7 +240,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
@@ -304,7 +305,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
@@ -378,7 +379,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
@@ -443,7 +444,7 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginLeft="15dp"
-            android:background="#EAE3E3"
+            android:background="@drawable/rounded_corners_textfields"
             >
 
 
