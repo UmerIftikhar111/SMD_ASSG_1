@@ -29,14 +29,14 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         // chat icon
-        ImageView chatIcn = findViewById(R.id.searchItems);
+        ImageView chatIcn = findViewById(R.id.chat);
         chatIcn.setOnClickListener(view -> {
             Intent intent = new Intent(SearchActivity.this, ChatActivity.class);
             startActivity(intent);
         });
 
         // profile icon
-        ImageView profileIcn = findViewById(R.id.searchItems);
+        ImageView profileIcn = findViewById(R.id.profile);
         profileIcn.setOnClickListener(view -> {
             Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
             startActivity(intent);

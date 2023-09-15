@@ -31,14 +31,14 @@ public class WelcomeActivityActivity extends AppCompatActivity {
         });
 
         // chat icon
-        ImageView chatIcn = findViewById(R.id.searchItems);
+        ImageView chatIcn = findViewById(R.id.chat);
         chatIcn.setOnClickListener(view -> {
             Intent intent = new Intent(WelcomeActivityActivity.this, ChatActivity.class);
             startActivity(intent);
         });
 
         // profile icon
-        ImageView profileIcn = findViewById(R.id.searchItems);
+        ImageView profileIcn = findViewById(R.id.profile);
         profileIcn.setOnClickListener(view -> {
             Intent intent = new Intent(WelcomeActivityActivity.this, ProfileActivity.class);
             startActivity(intent);

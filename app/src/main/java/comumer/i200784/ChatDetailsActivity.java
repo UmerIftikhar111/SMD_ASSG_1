@@ -29,7 +29,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
         });
 
         // video call icon
-        ImageView videoCallIcon = findViewById(R.id.nav_back_to_chat);
+        ImageView videoCallIcon = findViewById(R.id.start_video_call);
         videoCallIcon.setOnClickListener(view -> {
             Intent intent = new Intent(ChatDetailsActivity.this, VideoCallActivity.class);
             startActivity(intent);
