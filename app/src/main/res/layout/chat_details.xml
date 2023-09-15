@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/back_arrow_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:text="Makena Dias"
+            android:textColor="#AA7676"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:paddingTop="8dp"
+            app:srcCompat="@android:drawable/ic_menu_call" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CDB5B5" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="534dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="60dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+
+                >
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    tools:srcCompat="@tools:sample/avatars"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
+                    android:text="sample message"
+                    android:textColor="#35546C"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:text="12:30"
+                    android:textColor="#35546C"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:orientation="horizontal"
+
+                >
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="12dp"
+                    android:text="12:30"
+                    android:textColor="#35546C"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#FF9800"
+                    android:padding="5dp"
+                    android:text="Hello! how are you doing?"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+
+                >
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
+                    android:text="sample message"
+                    android:textColor="#35546C"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:text="12:30"
+                    android:textColor="#35546C"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+
+                >
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    tools:srcCompat="@tools:sample/avatars"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rounded_corners_textfields"
+                    android:padding="7dp"
+                    android:text="sample message"
+                    android:textColor="#35546C"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:text="12:30"
+                    android:textColor="#35546C"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+            />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CDB5B5"
+        />
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:hint="Write a Reply.."
+        android:textSize="25dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        >
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="33dp"
+            android:paddingTop="8dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:paddingLeft="10dp"
+            />
+
+        <ImageView
+        android:layout_width="30dp"
+        android:layout_height="33dp"
+        android:paddingTop="8dp"
+        android:paddingLeft="10dp"
+        app:srcCompat="@android:drawable/ic_input_get"
+
+        />
+
+        <ImageView
+        android:layout_width="35dp"
+        android:layout_height="33dp"
+        android:paddingTop="8dp"
+        android:paddingLeft="10dp"
+        app:srcCompat="@android:drawable/ic_menu_crop"
+
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Send"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="230dp"
+            android:textColor="#FF9800"
+            android:layout_marginTop="0dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

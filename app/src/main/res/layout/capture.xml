@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CaptureActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="631dp"
+        android:layout_marginTop="10dp"
+        android:background="#DFDBDB">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/cross_capture"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/sun_capture"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/timer_capture"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="101dp"
+        android:layout_marginLeft="0dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleX="1"
+            android:src="@drawable/view_gallery"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleX="1"
+            android:src="@drawable/take_picture"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleX="1"
+            android:src="@drawable/refresh_gallery"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="90dp"
+        android:paddingTop="8dp"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Photo"
+            android:backgroundTint="#FF9800"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"  />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Video"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    
+</LinearLayout>

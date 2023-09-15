@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:text="Login"
+            android:textSize="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:text="Email"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:hint="Enter Email"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:text="Password"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:hint="Enter Password"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+            android:inputType="textPassword"
+            />
+
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:gravity="right"
+            android:paddingTop="20dp"
+            android:text="Forgot your Password?"
+            android:textColor="#9ED818"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="360dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#FF9800"
+            android:background="@drawable/rounded_corners_buttons"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/navigate_to_register"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="Register"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

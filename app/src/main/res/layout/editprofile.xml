@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="0dp"
+            android:src="@drawable/back_arrow_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="Edit Profile"
+            android:textColor="#AA7676"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingLeft="55dp"
+            android:text="Save Changes"
+            android:textColor="#FFEB3B"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CDB5B5"/>
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:text="Name"
+                android:textColor="#35546C"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#EAE1E1"
+                android:hint="Enter Name"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:textSize="30dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:text="Email"
+                android:textColor="#35546C"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#EAE1E1"
+                android:hint="Enter Email"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:textSize="30dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="Contact Number"
+                android:textColor="#35546C"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#EAE1E1"
+                android:hint="Enter Contact Number"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:textSize="30dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="Country"
+                android:textColor="#35546C"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <Spinner
+
+                android:layout_width="350dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#EAE1E1"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:spinnerMode="dropdown"
+
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="City"
+                android:textColor="#35546C"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <Spinner
+
+                android:layout_width="350dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#EAE1E1"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:textSize="30dp"
+
+                />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

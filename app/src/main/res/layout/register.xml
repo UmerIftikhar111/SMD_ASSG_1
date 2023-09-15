@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:32"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/top_icons"
+            android:layout_marginLeft="220dp"/>
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/img" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:text="Registration"
+            android:textSize="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:text="Name"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:hint="Enter Name"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:text="Email"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:hint="Enter Email"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:text="Contact Number"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:hint="Enter Contact Number"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:text="Country"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <Spinner
+
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:spinnerMode="dropdown"
+            android:textSize="30dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:text="City"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <Spinner
+
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_textfields"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textSize="30dp"
+            android:spinnerMode="dropdown"
+            />
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="360dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#FF9800"
+            android:background="@drawable/rounded_corners_buttons"
+            android:text="Sign Up"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/navigate_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="Login"
+            android:textColor="#35546C"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
