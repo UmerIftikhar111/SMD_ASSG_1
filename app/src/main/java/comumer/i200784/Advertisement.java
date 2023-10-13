@@ -13,7 +13,7 @@ public class Advertisement {
     private String renterUid;
 
     public Advertisement() {
-        // Default constructor required for Firestore
+        // Default constructor
     }
 
     public Advertisement(String name, String description, Date date, double rate, String location, String pictureUrl, String posterUid, String renterUid) {

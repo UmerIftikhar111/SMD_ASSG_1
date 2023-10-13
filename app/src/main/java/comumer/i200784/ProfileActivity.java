@@ -24,6 +24,11 @@ public class ProfileActivity extends AppCompatActivity {
         items_posted = findViewById(R.id.items_posted);
         items_rented = findViewById(R.id.items_rented);
 
+        username.setText(User.currentUser.getName());
+        city.setText(User.currentUser.getCity());
+        items_posted.setText(User.currentUser.getItemsPosted()+" items posted");
+        items_rented.setText(User.currentUser.getItemsRented()+" items rented");
+
         // forgot pwd text view
         ImageView editProf = findViewById(R.id.editProfile);
         editProf.setOnClickListener(view -> {

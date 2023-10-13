@@ -30,6 +30,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/save_changes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -57,8 +58,6 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -70,12 +69,12 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_width="350dp"
+                android:id="@+id/name"
+                android:layout_width="326dp"
                 android:layout_height="55dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#EAE1E1"
-                android:hint="Enter Name"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:textSize="30dp"
@@ -93,12 +92,12 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_width="350dp"
+                android:id="@+id/email"
+                android:layout_width="326dp"
                 android:layout_height="55dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#EAE1E1"
-                android:hint="Enter Email"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:textSize="30dp"
@@ -116,12 +115,12 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_width="350dp"
+                android:id="@+id/contact"
+                android:layout_width="328dp"
                 android:layout_height="65dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#EAE1E1"
-                android:hint="Enter Contact Number"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:textSize="30dp"
@@ -138,16 +137,16 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <Spinner
+            <EditText
 
-                android:layout_width="350dp"
+                android:id="@+id/country"
+                android:layout_width="332dp"
                 android:layout_height="65dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#EAE1E1"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
-                android:spinnerMode="dropdown"
 
                 android:textSize="30dp" />
 
@@ -161,9 +160,9 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <Spinner
-
-                android:layout_width="350dp"
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="328dp"
                 android:layout_height="65dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -179,6 +178,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>
