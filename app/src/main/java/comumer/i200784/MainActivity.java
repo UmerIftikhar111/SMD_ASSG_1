@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         //btn
         Button loginBtn = findViewById(R.id.login_btn);
-        registerTextView.setOnClickListener(view -> {
+        loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
             startActivity(intent);
         });

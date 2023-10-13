@@ -16,7 +16,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // nav img view
         ImageView navProfile = findViewById(R.id.nav_to_item1Details);
-        navProfile.setOnClickListener((View.OnClickListener) view -> {
+        navProfile.setOnClickListener(view -> {
             Intent intent = new Intent(SearchActivity.this, SearchResultsActivity.class);
             startActivity(intent);
         });

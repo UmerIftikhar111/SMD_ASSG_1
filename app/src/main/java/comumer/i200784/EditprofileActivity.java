@@ -17,7 +17,7 @@ public class EditprofileActivity extends AppCompatActivity {
 
         // nav text view
         ImageView navProfile = findViewById(R.id.navigate_to_profile);
-        navProfile.setOnClickListener((View.OnClickListener) view -> {
+        navProfile.setOnClickListener(view -> {
             Intent intent = new Intent(EditprofileActivity.this, ProfileActivity.class);
             startActivity(intent);
         });

@@ -8,29 +8,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12:32"
-            android:textStyle="bold"
-            android:paddingLeft="20dp"
-            android:textSize="20dp"/>
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:src="@drawable/top_icons"
-            android:layout_marginLeft="220dp"/>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="20dp"
