@@ -39,7 +39,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_width="350dp"
+            android:layout_width="277dp"
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -47,7 +47,7 @@
             android:hint="Enter Name"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:textSize="30dp"
+            android:textSize="20dp"
 
 
             />
@@ -63,7 +63,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_width="350dp"
+            android:layout_width="277dp"
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -71,7 +71,7 @@
             android:hint="Enter Email"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:textSize="30dp"
+            android:textSize="20dp"
 
             />
 
@@ -86,7 +86,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_width="350dp"
+            android:layout_width="277dp"
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -94,7 +94,7 @@
             android:hint="Enter Contact Number"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:textSize="30dp"
+            android:textSize="20dp"
 
             />
 
@@ -110,7 +110,7 @@
 
         <Spinner
 
-            android:layout_width="350dp"
+            android:layout_width="280dp"
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -134,25 +134,24 @@
 
         <Spinner
 
-            android:layout_width="350dp"
+            android:layout_width="280dp"
             android:layout_height="65dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_corners_textfields"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:textSize="30dp"
             android:spinnerMode="dropdown"
-            />
+            android:textSize="30dp" />
 
         <Button
             android:id="@+id/register_btn"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
+            android:layout_width="292dp"
+            android:layout_height="74dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#FF9800"
             android:background="@drawable/rounded_corners_buttons"
+            android:backgroundTint="#FF9800"
             android:text="Sign Up"
             android:textColor="@color/white" />
 
