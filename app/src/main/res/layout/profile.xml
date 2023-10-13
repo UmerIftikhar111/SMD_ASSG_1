@@ -232,7 +232,6 @@
                             android:layout_marginTop="145dp"
                             app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
-
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="170dp"

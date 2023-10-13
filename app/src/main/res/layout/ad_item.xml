@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="200dp"
+    android:paddingTop="20dp"
+    android:paddingLeft="10dp"
+    android:background="#EAE3E3">
+
+    <ImageView
+        android:id="@+id/adImage"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/adTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="18dp"
+        android:layout_below="@id/adImage"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:id="@+id/adPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10$/hr"
+        android:textSize="18dp"
+        android:textColor="#CDDC39"
+        android:textStyle="bold"
+        android:layout_below="@id/adImage"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/adLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Islamabad"
+        android:textSize="16dp"
+        android:layout_below="@id/adTitle"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:id="@+id/adDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7th Mar"
+        android:textSize="16dp"
+        android:layout_below="@id/adTitle"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_below="@id/adTitle"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/adLocation"
+        android:layout_toEndOf="@id/adLocation"
+        android:src="@drawable/ic_launcher_background" />
+</RelativeLayout>
