@@ -1,5 +1,6 @@
 package comumer.i200784;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.PropertyName;
 
 public class User {
@@ -8,6 +9,15 @@ public class User {
     private String contact;
     private String country;
     private String city;
+
+
+    private int itemsPosted;
+
+
+    private int itemsRented;
+    private String coverProfileUrl;
+    private String mainProfileUrl;
+    public static User currentUser;
 
     public User() {
         // Default constructor required for Firestore
@@ -70,5 +80,39 @@ public class User {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public int getItemsPosted() {
+        return itemsPosted;
+    }
+
+    public void setItemsPosted(int itemsPosted) {
+        this.itemsPosted = itemsPosted;
+    }
+
+    public int getItemsRented() {
+        return itemsRented;
+    }
+
+    public void setItemsRented(int itemsRented) {
+        this.itemsRented = itemsRented;
+    }
+
+    public String getCoverProfileUrl() {
+        return coverProfileUrl;
+    }
+
+    public void setCoverProfileUrl(String coverProfileUrl) {
+        this.coverProfileUrl = coverProfileUrl;
+    }
+
+    public String getMainProfileUrl() {
+        return mainProfileUrl;
+    }
+
+    public void setMainProfileUrl(String mainProfileUrl) {
+        this.mainProfileUrl = mainProfileUrl;
+    }
+
+
 }
 

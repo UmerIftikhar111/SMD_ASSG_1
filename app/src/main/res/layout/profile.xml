@@ -26,15 +26,24 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
+
         <ImageView
             android:id="@+id/editProfile"
             android:layout_width="30dp"
             android:layout_height="35dp"
             android:paddingTop="5dp"
             app:srcCompat="@android:drawable/ic_input_get"
-            android:layout_marginLeft="250dp"
+            android:layout_marginLeft="130dp"
             />
 
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:paddingLeft="30dp"/>
 
 
 
@@ -69,9 +78,10 @@
         >
 
         <TextView
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Daud"
+            android:text="No text"
             android:textStyle="bold"
             android:textSize="30dp"
             android:paddingLeft="30dp"
@@ -87,31 +97,33 @@
 
 
         <TextView
+            android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Islamabad"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="75dp"
-            android:layout_marginLeft="70dp"
             android:paddingLeft="10dp"
-            android:textSize="15dp"
-            />
+            android:text="Islamabad"
+            android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/items_posted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="18 Items Posted"
             android:layout_marginTop="75dp"
-            android:layout_marginLeft="160dp"
+            android:layout_marginLeft="140dp"
             android:paddingLeft="10dp"
             android:textSize="15dp"
             />
 
         <TextView
+            android:id="@+id/items_rented"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="24 Items Rented"
             android:layout_marginTop="75dp"
-            android:layout_marginLeft="280dp"
+            android:layout_marginLeft="260dp"
             android:paddingLeft="10dp"
             android:textSize="15dp"
             />

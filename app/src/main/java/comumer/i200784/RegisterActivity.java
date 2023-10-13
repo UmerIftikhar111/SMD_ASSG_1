@@ -66,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
             String selectedCountry = country.getSelectedItem().toString();
             String selectedCity = city.getSelectedItem().toString();
 
+
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
             mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
@@ -82,6 +83,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 // Create a user object with additional data
                                 User newUser = new User(userName, userEmail, userContact, selectedCountry, selectedCity);
+                                newUser.setItemsPosted(0);
+                                newUser.setItemsRented(0);
+                                newUser.setCoverProfileUrl("");
+                                newUser.setMainProfileUrl("");
 
                                 // Set the user object in Firestore
                                 userRef.set(newUser)
