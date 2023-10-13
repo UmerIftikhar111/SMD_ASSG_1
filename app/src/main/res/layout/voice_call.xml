@@ -22,6 +22,7 @@
             android:paddingTop="10dp">
 
             <TextView
+                android:id="@+id/caller_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -29,6 +30,7 @@
                 android:textSize="40dp" />
 
             <TextView
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -58,22 +60,25 @@
         android:weightSum="3">
 
         <ImageView
+            android:id="@+id/mute"
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/mute_voice_call"/>
+            android:src="@drawable/mute_voice_call" />
 
         <ImageView
+            android:id="@+id/speaker"
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/speaker_voice_call"/>
+            android:src="@drawable/speaker_voice_call" />
 
         <ImageView
+            android:id="@+id/hold"
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/pause_voice_call"/>
+            android:src="@drawable/pause_voice_call" />
 
     </LinearLayout>
 
