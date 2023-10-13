@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Spot-It</string>
+    <string-array name="countries">
+        <item>Pakistan</item>
+    <!-- Add more countries here -->
+    </string-array>
+
+    <string-array name="pakistani_cities">
+        <item>Lahore</item>
+        <item>Karachi</item>
+        <item>Islamabad</item>
+        <!-- Add more Pakistani cities here -->
+    </string-array>
 </resources>
