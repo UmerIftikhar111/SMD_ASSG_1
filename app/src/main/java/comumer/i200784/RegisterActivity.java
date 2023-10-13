@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .addOnSuccessListener(aVoid -> {
                                             // Data has been successfully saved in Firestore
                                             Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(RegisterActivity.this, WelcomeActivityActivity.class);
+                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                             startActivity(intent);
                                         })
                                         .addOnFailureListener(e -> {

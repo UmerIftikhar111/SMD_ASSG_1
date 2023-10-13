@@ -60,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Login successful
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             if (user != null) {
 
-                                // Replace "your_user_uid" with the actual UID
                                 String userUid = user.getUid();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -80,9 +78,16 @@ public class MainActivity extends AppCompatActivity {
                                             String country = document.getString("country");
                                             String contact = document.getString("contact");
                                             String city = document.getString("city");
-                                            // Retrieve other user data as needed
+                                            String coverUrl = document.getString("coverProfileUrl");
+                                            String profileUrl = document.getString("mainProfileUrl");
 
+                                            // Retrieve other user data as needed
+                                            User.currentUser=null;
                                             User.currentUser = new User(name,email, contact, country, city);
+
+                                            User.currentUser.setMainProfileUrl(profileUrl);
+                                            User.currentUser.setCoverProfileUrl(coverUrl);
+
 
                                             // Display a toast message with user data
                                             String toastMessage = "Name: " + name + "\nEmail: " + email;

@@ -53,6 +53,10 @@ public class EditprofileActivity extends AppCompatActivity {
             db.collection("users").document(userUid)
                     .update("name", updatedName, "contact", updatedContact, "country", updatedCountry, "city", updatedCity)
                     .addOnSuccessListener(aVoid -> {
+
+                        User updatedUser = new User(updatedName, User.currentUser.getEmail(), updatedContact, updatedCountry, updatedCity );
+                        User.currentUser=updatedUser;
+
                         // Profile updated successfully
                         Toast.makeText(EditprofileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
                         // Redirect back to the profile screen

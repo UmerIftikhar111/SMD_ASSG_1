@@ -26,8 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-
     private static final int PICK_IMAGE_REQUEST = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +48,24 @@ public class ProfileActivity extends AppCompatActivity {
         items_posted.setText(User.currentUser.getItemsPosted()+" items posted");
         items_rented.setText(User.currentUser.getItemsRented()+" items rented");
 
+        if (User.currentUser.getMainProfileUrl() != null) {
+            String profileUrl = User.currentUser.getMainProfileUrl();
+            Picasso.get().load(profileUrl).into(profile_pic);
+        }
+
+        if (!User.currentUser.getCoverProfileUrl().isEmpty()) {
+            String coverUrl = User.currentUser.getCoverProfileUrl();
+            Picasso.get().load(coverUrl).into(cover_pic);
+        }
+
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        profile_pic.setOnClickListener(view -> pickImageFromGallery(PICK_IMAGE_REQUEST));
-        cover_pic.setOnClickListener(view -> pickImageFromGallery(PICK_IMAGE_REQUEST));
+        profile_pic.setOnClickListener(view -> pickImageFromGallery(1));
+        cover_pic.setOnClickListener(view -> pickImageFromGallery(2));
 
         // forgot pwd text view
         ImageView editProf = findViewById(R.id.editProfile);
@@ -91,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PICK_IMAGE_REQUEST) {
+            if (requestCode == 1 || requestCode == 2) {
                 Uri selectedImageUri = data.getData();
                 // Upload the selected image to Firebase Storage
                 uploadImageToStorage(selectedImageUri, requestCode);
@@ -100,16 +111,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     // ...
-
     private void uploadImageToStorage(Uri imageUri, int requestCode) {
         String uid = mAuth.getCurrentUser().getUid();
 
-        StorageReference imageRef = storageRef.child("images/" + uid + "/" + requestCode + ".jpg");
+        StorageReference imageRef = storageRef.child("images/" + uid + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 
         UploadTask uploadTask = imageRef.putFile(imageUri);
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             // Image uploaded successfully
-
             // Get the download URL for the uploaded image
             imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
                 // Update the user's Firestore document with the download URL
@@ -125,15 +134,24 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void updateProfileImageInFirestore(String downloadUrl, int requestCode) {
-        String fieldToUpdate = (requestCode == PICK_IMAGE_REQUEST) ? "profileImageUrl" : "coverImageUrl";
+        String fieldToUpdate;
+
+        if(requestCode == 1){
+            fieldToUpdate="mainProfileUrl";
+        }else if(requestCode == 2){
+            fieldToUpdate="coverProfileUrl";
+        } else {
+            fieldToUpdate = "img";
+        }
+
         DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getUid());
         userRef.update(fieldToUpdate, downloadUrl)
                 .addOnSuccessListener(aVoid -> {
                     // Successfully updated Firestore document
                     // Set the image in the ImageView
-                    if (requestCode == PICK_IMAGE_REQUEST) {
+                    if ( fieldToUpdate=="profileImageUrl") {
                         Picasso.get().load(downloadUrl).into(profile_pic);
-                    } else {
+                    } else if(fieldToUpdate=="coverImageUrl") {
                         Picasso.get().load(downloadUrl).into(cover_pic);
                     }
                 })
@@ -142,6 +160,5 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.makeText(ProfileActivity.this, "Failed to update Firestore document", Toast.LENGTH_SHORT).show();
                 });
     }
-
 
 }
