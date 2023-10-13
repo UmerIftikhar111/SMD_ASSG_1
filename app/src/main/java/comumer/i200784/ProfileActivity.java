@@ -1,17 +1,33 @@
 package comumer.i200784;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
     TextView logout, username, city, items_posted, items_rented;
+    ImageView cover_pic, profile_pic;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +40,21 @@ public class ProfileActivity extends AppCompatActivity {
         items_posted = findViewById(R.id.items_posted);
         items_rented = findViewById(R.id.items_rented);
 
+        cover_pic=findViewById(R.id.cover_pic);
+        profile_pic=findViewById(R.id.profile_pic);
+
         username.setText(User.currentUser.getName());
         city.setText(User.currentUser.getCity());
         items_posted.setText(User.currentUser.getItemsPosted()+" items posted");
         items_rented.setText(User.currentUser.getItemsRented()+" items rented");
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+        profile_pic.setOnClickListener(view -> pickImageFromGallery(PICK_IMAGE_REQUEST));
+        cover_pic.setOnClickListener(view -> pickImageFromGallery(PICK_IMAGE_REQUEST));
 
         // forgot pwd text view
         ImageView editProf = findViewById(R.id.editProfile);
@@ -51,4 +78,70 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
+
+    // Trigger image selection from the gallery
+    private void pickImageFromGallery(int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PICK_IMAGE_REQUEST) {
+                Uri selectedImageUri = data.getData();
+                // Upload the selected image to Firebase Storage
+                uploadImageToStorage(selectedImageUri, requestCode);
+            }
+        }
+    }
+
+    // ...
+
+    private void uploadImageToStorage(Uri imageUri, int requestCode) {
+        String uid = mAuth.getCurrentUser().getUid();
+
+        StorageReference imageRef = storageRef.child("images/" + uid + "/" + requestCode + ".jpg");
+
+        UploadTask uploadTask = imageRef.putFile(imageUri);
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            // Image uploaded successfully
+
+            // Get the download URL for the uploaded image
+            imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                // Update the user's Firestore document with the download URL
+                updateProfileImageInFirestore(downloadUri.toString(), requestCode);
+            }).addOnFailureListener(e -> {
+                // Handle the error when retrieving download URL
+                Toast.makeText(ProfileActivity.this, "Failed to get download URL for the image", Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            // Handle the error when uploading the image
+            Toast.makeText(ProfileActivity.this, "Failed to upload the image", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void updateProfileImageInFirestore(String downloadUrl, int requestCode) {
+        String fieldToUpdate = (requestCode == PICK_IMAGE_REQUEST) ? "profileImageUrl" : "coverImageUrl";
+        DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getUid());
+        userRef.update(fieldToUpdate, downloadUrl)
+                .addOnSuccessListener(aVoid -> {
+                    // Successfully updated Firestore document
+                    // Set the image in the ImageView
+                    if (requestCode == PICK_IMAGE_REQUEST) {
+                        Picasso.get().load(downloadUrl).into(profile_pic);
+                    } else {
+                        Picasso.get().load(downloadUrl).into(cover_pic);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle the error when updating Firestore document
+                    Toast.makeText(ProfileActivity.this, "Failed to update Firestore document", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
 }
