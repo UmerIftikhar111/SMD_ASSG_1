@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,10 +35,6 @@
             android:textColor="#AA7676"
             android:textSize="25dp"
             android:textStyle="bold" />
-
-
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -47,16 +48,14 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:paddingLeft="50dp"
-        android:paddingTop="20dp"
-        >
-
+        android:paddingTop="20dp">
 
         <RelativeLayout
+            android:id="@+id/image"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:padding="16dp"
-            android:background="@drawable/border_background">
-
+            android:background="@drawable/border_background"
+            android:padding="16dp">
             <!-- Camera icon in the center -->
             <ImageView
                 android:id="@+id/cameraIcon"
@@ -64,7 +63,6 @@
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/yelow_camera" />
-
             <!-- "Upload Image" text below the camera icon -->
             <TextView
                 android:layout_width="wrap_content"
@@ -73,17 +71,17 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="1dp"
                 android:text="Upload Image"
-                android:textSize="16dp"
-                android:textColor="#FF9800" />
-
+                android:textColor="#FF9800"
+                android:textSize="16dp" />
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/video"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:padding="16dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/border_background"
-            android:layout_marginLeft="10dp">
-
+            android:padding="16dp">
             <!-- Camera icon in the center -->
             <ImageView
                 android:id="@+id/videoIcon"
@@ -91,8 +89,7 @@
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/yellow_video" />
-
-            <!-- "Upload Image" text below the camera icon -->
+            <!-- "Upload Video" text below the camera icon -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,14 +97,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="1dp"
                 android:text="Upload Video"
-                android:textSize="16dp"
-                android:textColor="#FF9800" />
-
+                android:textColor="#FF9800"
+                android:textSize="16dp" />
         </RelativeLayout>
-
-
     </LinearLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -140,6 +133,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/name"
                 android:layout_width="350dp"
                 android:layout_height="55dp"
                 android:layout_marginLeft="20dp"
@@ -163,6 +157,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/rate"
                 android:layout_width="350dp"
                 android:layout_height="55dp"
                 android:layout_marginLeft="20dp"
@@ -186,6 +181,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/desc"
                 android:layout_width="350dp"
                 android:layout_height="95dp"
                 android:layout_marginLeft="20dp"
@@ -210,7 +206,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-
+                android:id="@+id/city"
                 android:layout_width="350dp"
                 android:layout_height="65dp"
                 android:layout_marginLeft="20dp"
@@ -223,6 +219,7 @@
                 />
 
             <Button
+                android:id="@+id/post"
                 android:layout_width="360dp"
                 android:layout_height="80dp"
                 android:layout_gravity="bottom"
@@ -236,6 +233,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
 </LinearLayout>
+</ScrollView>
