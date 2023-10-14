@@ -23,6 +23,7 @@
             android:src="@drawable/back_arrow_icon"/>
 
         <TextView
+            android:id="@+id/contactName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -241,14 +242,14 @@
         android:background="#CDB5B5"
         />
 
-    <TextView
+    <EditText
+        android:id="@+id/messageText"
         android:layout_width="400dp"
         android:layout_height="50dp"
         android:hint="Write a Reply.."
         android:textSize="25dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-
         />
 
     <LinearLayout
@@ -285,6 +286,7 @@
         />
 
         <TextView
+            android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Send"

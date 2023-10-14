@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Design.Light"
         tools:targetApi="31">
         <activity
+            android:name=".DeleteIt"
+            android:exported="false" />
+        <activity
             android:name=".Ad_item"
             android:exported="false" />
         <activity
@@ -31,7 +34,7 @@
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".WelcomeActivityActivity"
             android:exported="false" />

@@ -25,10 +25,6 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-
-
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -36,124 +32,13 @@
         android:layout_height="2dp"
         android:background="#CDB5B5"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewContacts"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:padding="16dp"
+        android:scrollbars="vertical" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="520dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="400dp"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
-
-
-                >
-
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/profile_pic" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginRight="00dp"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="10dp"
-                    >
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:text="Alex"
-                    android:textSize="30dp" />
-
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:text="New messages"
-                    android:textSize="20dp"
-                    android:textColor="#FFEB3B"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/nav_to_chat_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/chat_open_arrow"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="400dp"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
-
-
-                >
-
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/profile_pic" />
-
-                <LinearLayout
-                    android:layout_width="165dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="20dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:text="John"
-                        android:textSize="30dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:text="No messages"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/chat_open_arrow"/>
-
-
-            </LinearLayout>
-
-
-
-
-        </LinearLayout>
-
-    </ScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="83dp"

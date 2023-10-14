@@ -9,11 +9,7 @@ public class User {
     private String contact;
     private String country;
     private String city;
-
-
     private int itemsPosted;
-
-
     private int itemsRented;
     private String coverProfileUrl;
     private String mainProfileUrl;
