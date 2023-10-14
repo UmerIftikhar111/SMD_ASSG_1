@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Design.Light"
         tools:targetApi="31">
         <activity
+            android:name=".ChatMessageRightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatMessageLeftActivity"
+            android:exported="false" />
+        <activity
             android:name=".DeleteIt"
             android:exported="false" />
         <activity

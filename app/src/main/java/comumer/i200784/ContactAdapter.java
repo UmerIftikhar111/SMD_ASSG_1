@@ -1,6 +1,7 @@
 package comumer.i200784;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         if(contact.getProfilePictureUrl()!=null && !contact.getProfilePictureUrl().isEmpty())
          Picasso.get().load(contact.getProfilePictureUrl()).into(holder.displayPic);
 
-        // Set an item click listener for the contact
+        holder.navigator.setOnClickListener(v -> {
+            String receiverUid = contact.getUserId();
+
+            Intent intent = new Intent(context, ChatDetailsActivity.class);
+            intent.putExtra("receiverUid", receiverUid);
+            intent.putExtra("receiverUsername", contact.getUsername());
+            intent.putExtra("receiverProfileUrl", contact.getProfilePictureUrl());
+            context.startActivity(intent);
+
+        });
 
     }
 

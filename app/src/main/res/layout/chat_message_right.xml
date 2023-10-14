@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sender_msgContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="90dp"
+    android:layout_marginTop="60dp"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/sender_time"
+        android:layout_alignBottom="@+id/messageBody"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:text="12:30"
+        android:textColor="#35546C"
+        android:textSize="13dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/messageBody"
+        android:layout_toRightOf="@+id/sender_time"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/rounded_corners_textfields"
+        android:padding="7dp"
+        android:text="sample message"
+        android:textColor="#35546C"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+
+
+
+</RelativeLayout>
