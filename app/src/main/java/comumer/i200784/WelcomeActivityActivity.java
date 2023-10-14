@@ -19,7 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WelcomeActivityActivity extends AppCompatActivity implements AdAdapter.OnItemClickListener{
+public class WelcomeActivityActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AdAdapter adAdapter;
@@ -77,21 +77,9 @@ public class WelcomeActivityActivity extends AppCompatActivity implements AdAdap
             startActivity(intent);
         });
 
-//        // items box icon
-//        RelativeLayout itemBox = findViewById(R.id.Item1Box);
-//        itemBox.setOnClickListener(view -> {
-//            Intent intent = new Intent(WelcomeActivityActivity.this, ItemDetailsActivity.class);
-//            startActivity(intent);
-//        });
+
     }
 
-    @Override
-    public void onItemClick(Advertisement item) {
-        Intent intent = new Intent(this, ItemDetailsActivity.class);
-        // Pass the item details to the ItemDetailsActivity
-        intent.putExtra("itemDetails", item);
-        startActivity(intent);
-    }
 
     private void fetchItemsFromFirestore() {
         // Initialize Firestore

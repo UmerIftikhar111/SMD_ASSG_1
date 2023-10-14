@@ -1,10 +1,12 @@
 package comumer.i200784;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,13 +22,6 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
 
     private List<Advertisement> itemList;
     private Context context;
-
-    private OnItemClickListener onItemClickListener;
-
-//    public AdAdapter(List<Advertisement> itemList, OnItemClickListener onItemClickListener) {
-//        this.itemList = itemList;
-//        this.onItemClickListener = onItemClickListener;
-//    }
 
     public AdAdapter(List<Advertisement> itemList, Context context) {
         this.itemList = itemList;
@@ -59,6 +54,15 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
         holder.adDate.setText(item.getDate());
 
         Picasso.get().load(item.getPictureUrl()).into(holder.adImage);
+
+        holder.itemBox.setOnClickListener(v -> {
+
+            Intent intent = new Intent(context, ItemDetailsActivity.class);
+            intent.putExtra("itemDetails", item);
+            context.startActivity(intent);
+
+        });
+
     }
 
     @Override
@@ -70,27 +74,22 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
         ImageView adImage;
         TextView adTitle, adPrice, adLocation, adDate;
 
+        RelativeLayout itemBox;
+
         public AdViewHolder(@NonNull View itemView) {
             super(itemView);
             adImage = itemView.findViewById(R.id.adImage);
             adTitle = itemView.findViewById(R.id.adTitle);
             adPrice = itemView.findViewById(R.id.adPrice);
             adDate = itemView.findViewById(R.id.adDate);
+            itemBox = itemView.findViewById(R.id.itemBox);
             adLocation = itemView.findViewById(R.id.adLocation);
 
-            itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(itemList.get(position));
-                }
-            });
+
 
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(Advertisement item);
-    }
 
 
 
