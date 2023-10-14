@@ -116,6 +116,8 @@ public class Advertisement implements Parcelable {
         pictureUrl = in.readString();
         posterUid = in.readString();
         renterUid = in.readString();
+        itemUid = in.readString();
+
     }
 
     @Override
@@ -129,6 +131,7 @@ public class Advertisement implements Parcelable {
         dest.writeString(pictureUrl);
         dest.writeString(posterUid);
         dest.writeString(renterUid);
+        dest.writeString(itemUid);
     }
 
     @Override

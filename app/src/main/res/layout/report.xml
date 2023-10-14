@@ -64,8 +64,9 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="105dp"
+                android:id="@+id/reason"
+                android:layout_width="300dp"
+                android:layout_height="205dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#EAE1E1"
@@ -79,13 +80,14 @@
 
 
             <Button
-                android:layout_width="360dp"
-                android:layout_height="80dp"
+                android:id="@+id/reportBtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="bottom"
                 android:background="@drawable/rounded_corners_buttons"
                 android:text="Submit Report"
-                android:layout_marginTop="380dp"
+                android:layout_marginTop="210dp"
                 android:textSize="25dp"
                 android:textColor="@color/white" />
 

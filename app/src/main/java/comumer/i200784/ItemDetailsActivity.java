@@ -70,6 +70,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
         TextView reportItem = findViewById(R.id.report_item);
         reportItem.setOnClickListener(view -> {
             Intent intent = new Intent(ItemDetailsActivity.this, ReportActivity.class);
+            // Add the item UID as an extra to the intent
+            intent.putExtra("itemUid", advertisement.getItemUid());
             startActivity(intent);
         });
 
