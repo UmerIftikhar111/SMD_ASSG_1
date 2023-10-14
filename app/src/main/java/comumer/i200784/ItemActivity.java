@@ -40,8 +40,11 @@ import com.google.firebase.storage.UploadTask;
 import android.Manifest;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -133,10 +136,16 @@ public class ItemActivity extends AppCompatActivity {
                     startActivityForResult(galleryIntent, requestCode);
                     break;
                 case 1:
-                    // Camera option selected
-                    // You need to implement camera capture logic here
-                    Toast.makeText(this, "Camera option selected", Toast.LENGTH_SHORT).show();
-                    openCamera();
+                    if (requestCode == IMAGE_REQUEST) {
+                        Intent cameraIntent = new Intent(ItemActivity.this, CaptureActivity.class);
+                        startActivityForResult(cameraIntent,101);
+                        Toast.makeText(this, "Camera option selected", Toast.LENGTH_SHORT).show();
+                    } else if (requestCode == VIDEO_REQUEST) {
+                        Intent videoIntent = new Intent(ItemActivity.this, Video.class);
+                        startActivity(videoIntent);
+                        Toast.makeText(this, "Video option selected", Toast.LENGTH_SHORT).show();
+                    }
+
                     break;
             }
         });
@@ -175,9 +184,17 @@ public class ItemActivity extends AppCompatActivity {
         itemData.put("itemDesc", itemDesc);
         itemData.put("itemCity", itemCity);
         itemData.put("itemRate", itemRate);
-        itemData.put("userId", userId);
+        itemData.put("posterUid", userId);
         itemData.put("imageUrl", imageUrl);
         itemData.put("videoUrl", videoUrl);
+        itemData.put("renterUid"," ");
+        // Get the current date
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+// Format the current date
+        String formattedDate = dateFormat.format(currentDate);
+// Now, you can put the formatted date into your itemData
+        itemData.put("itemDate", formattedDate);
 
         docRef.set(itemData)
                 .addOnSuccessListener(aVoid -> {
@@ -205,109 +222,5 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-    private static final int CAMERA_PERMISSION_CODE = 101;
 
-    private void openCamera() {
-        // Check for camera permission and request it if not granted
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-            return; // Return if permission not granted yet
-        }
-
-        try {
-            cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-            String cameraId = cameraManager.getCameraIdList()[0];
-            CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
-
-            cameraManager.openCamera(cameraId, new CameraDevice.StateCallback() {
-                @Override
-                public void onOpened(@NonNull CameraDevice camera) {
-                    cameraDevice = camera;
-                    createCameraPreviewSession();
-                }
-
-                @Override
-                public void onDisconnected(@NonNull CameraDevice camera) {
-                    cameraDevice.close();
-                }
-
-                @Override
-                public void onError(@NonNull CameraDevice camera, int error) {
-                    cameraDevice.close();
-                    cameraDevice = null;
-                }
-            }, null);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void createCameraPreviewSession() {
-        try {
-            imageReader = ImageReader.newInstance(1920, 1080, ImageFormat.JPEG, 2);
-            imageReader.setOnImageAvailableListener(reader -> {
-                // Handle the captured image here
-                Image image = reader.acquireLatestImage();
-                // Convert image to Bitmap or save it
-                // ...
-                image.close();
-            }, backgroundHandler);
-
-            Surface surface = imageReader.getSurface();
-
-            CaptureRequest.Builder captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            captureRequestBuilder.addTarget(surface);
-
-            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
-                @Override
-                public void onConfigured(@NonNull CameraCaptureSession session) {
-                    if (cameraDevice == null) {
-                        return;
-                    }
-
-                    captureSession = session;
-                    try {
-                        captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler);
-                    } catch (CameraAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(ItemActivity.this, "Failed to configure camera session.", Toast.LENGTH_SHORT).show();
-                }
-            }, backgroundHandler);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(this, "Camera permission denied.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // Rest of the code (upload and Firestore) remains the same
-
-    // Be sure to handle camera release in onDestroy() or onPause() to avoid resource leaks
-    // Release the camera and background thread in onDestroy()
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (cameraDevice != null) {
-            cameraDevice.close();
-        }
-        if (backgroundThread != null) {
-            backgroundThread.quitSafely();
-        }
-    }
 }
