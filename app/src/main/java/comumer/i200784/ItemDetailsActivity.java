@@ -9,10 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ItemDetailsActivity extends AppCompatActivity {
 
+    ImageView itemImage, posterImage;
+    TextView itemRate, itemName, itemDescription, itemLocation, itemDate, posterName, posterItemsAdded;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_details);
+
+        Advertisement advertisement = getIntent().getParcelableExtra("itemDetails");
+
 
         // back arrow icon
         ImageView navBackArrowIcn = findViewById(R.id.nav_to_items);

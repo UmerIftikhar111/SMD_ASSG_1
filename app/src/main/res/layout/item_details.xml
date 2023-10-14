@@ -59,6 +59,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/itemImage"
                 android:layout_width="412dp"
                 android:layout_height="260dp"
                 android:scaleX="2"
@@ -73,6 +74,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/itemRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10$"
@@ -96,6 +98,7 @@
 
 
             <TextView
+                android:id="@+id/itemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item Name comes here"
@@ -114,6 +117,7 @@
 
 
             <TextView
+                android:id="@+id/itemLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Islamabad"
@@ -124,6 +128,7 @@
                 />
 
             <TextView
+                android:id="@+id/itemDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7th March"
@@ -134,8 +139,9 @@
                 />
             
             <TextView
+                android:id="@+id/itemDescription"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="90dp"
                 android:padding="20dp"
                 android:text="this is sample text that is being used to fill the space."
                 android:layout_marginTop="130dp"
@@ -151,13 +157,15 @@
                 >
 
                 <ImageView
-                    android:id="@+id/imageView9"
+
+                    android:id="@+id/posterImage"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
+                    android:id="@+id/posterName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ryan Gosling"
@@ -166,6 +174,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/posterItemsAdded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="24 Items rented"
@@ -175,6 +184,7 @@
 
                 <ImageView
 
+                    android:id="@+id/chatWithPoster"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -201,7 +211,7 @@
                 android:background="@drawable/rounded_corners_buttons"
                 android:text="Rent it"
                 android:textColor="@color/white"
-                android:textSize="25dp"/>
+                android:textSize="25dp" />
 
         </RelativeLayout>
 

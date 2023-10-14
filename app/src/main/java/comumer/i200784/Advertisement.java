@@ -1,22 +1,28 @@
 package comumer.i200784;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Advertisement {
+public class Advertisement implements Parcelable {
     private String name;
     private String description;
-    private Date date;
+    private String date;
     private double rate;
     private String location;
     private String pictureUrl;
     private String posterUid;
     private String renterUid;
 
+
+    private String itemUid;
+
     public Advertisement() {
         // Default constructor
     }
 
-    public Advertisement(String name, String description, Date date, double rate, String location, String pictureUrl, String posterUid, String renterUid) {
+    public Advertisement(String name, String description, String date, double rate, String location, String pictureUrl, String posterUid, String renterUid) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -43,11 +49,11 @@ public class Advertisement {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -90,5 +96,57 @@ public class Advertisement {
     public void setRenterUid(String renterUid) {
         this.renterUid = renterUid;
     }
+
+
+    public String getItemUid() {
+        return itemUid;
+    }
+
+    public void setItemUid(String itemUid) {
+        this.itemUid = itemUid;
+    }
+
+    protected Advertisement(Parcel in) {
+        // Read data from the Parcel and initialize your object
+        name = in.readString();
+        description = in.readString();
+        date = in.readString();
+        rate = in.readDouble();
+        location = in.readString();
+        pictureUrl = in.readString();
+        posterUid = in.readString();
+        renterUid = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Write data to the Parcel
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(date);
+        dest.writeDouble(rate);
+        dest.writeString(location);
+        dest.writeString(pictureUrl);
+        dest.writeString(posterUid);
+        dest.writeString(renterUid);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Advertisement> CREATOR = new Creator<Advertisement>() {
+        @Override
+        public Advertisement createFromParcel(Parcel in) {
+            return new Advertisement(in);
+        }
+
+        @Override
+        public Advertisement[] newArray(int size) {
+            return new Advertisement[size];
+        }
+    };
+
 }
 

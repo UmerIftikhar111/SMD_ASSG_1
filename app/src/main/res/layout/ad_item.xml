@@ -2,11 +2,13 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="200dp"
-    android:paddingTop="20dp"
-    android:paddingLeft="10dp"
-    android:background="#EAE3E3">
+    android:layout_width="180dp"
+    android:layout_height="165dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="3dp"
+    android:layout_marginLeft="20dp"
+    android:background="@drawable/rounded_corners_textfields"
+    >
 
     <ImageView
         android:id="@+id/adImage"
@@ -24,7 +26,7 @@
         android:textSize="18dp"
         android:layout_below="@id/adImage"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="0dp" />
 
     <TextView
         android:id="@+id/adPrice"
@@ -44,28 +46,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Islamabad"
-        android:textSize="16dp"
+        android:textSize="13dp"
         android:layout_below="@id/adTitle"
         android:layout_marginTop="5dp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="0dp" />
 
     <TextView
         android:id="@+id/adDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="7th Mar"
-        android:textSize="16dp"
+        android:textSize="13dp"
         android:layout_below="@id/adTitle"
         android:layout_marginTop="5dp"
         android:layout_alignParentRight="true"
         android:paddingRight="10dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_below="@id/adTitle"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/adLocation"
-        android:layout_toEndOf="@id/adLocation"
-        android:src="@drawable/ic_launcher_background" />
+
 </RelativeLayout>
