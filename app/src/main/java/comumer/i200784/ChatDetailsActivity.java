@@ -139,7 +139,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
         joinLeaveButton = findViewById(R.id.joinLeaveButton);
         infoText = findViewById(R.id.infoText);
         joinLeaveButton.setOnClickListener(view -> {
-            joinLeaveChannel();
+            joinLeaveChannel(joinLeaveButton);
             Intent intent = new Intent(ChatDetailsActivity.this, VoiceCallActivity.class);
             startActivity(intent);
         });

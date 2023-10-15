@@ -1,95 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CaptureActivity"
-    android:orientation="vertical"
-    >
+    tools:context=".MainActivity">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="564dp"
-        android:layout_marginTop="10dp"
-        android:background="#9C8E8E">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+        <FrameLayout
+            android:id="@+id/local_video_view_container"
+            android:layout_width="320dp"
+            android:layout_height="240dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="6dp"
+            android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="00:45"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
+        <FrameLayout
+            android:id="@+id/remote_video_view_container"
+            android:layout_width="320dp"
+            android:layout_height="240dp"
+            android:layout_below="@+id/local_video_view_container"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="6dp"
+            android:background="@android:color/darker_gray" />
+        <Button
+            android:id="@+id/JoinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/remote_video_view_container"
+            android:layout_alignStart="@id/remote_video_view_container"
+            android:layout_marginTop="40dp"
+            android:onClick="joinChannel"
+            android:text="Join" />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/rounded_corners_textfields" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="70dp"
-        android:layout_height="6dp"
-        android:background="#CDB5B5"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
-
-    <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:weightSum="4">
-
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:src="@drawable/mute_voice_call"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:src="@drawable/stop_camera"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:src="@drawable/refresh_gallery"/>
-
-        <ImageView
-            android:id="@+id/end_video_call"
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:src="@drawable/end_voice_call"/>
-    </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-</LinearLayout>
+        <Button
+            android:id="@+id/LeaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/remote_video_view_container"
+            android:layout_alignEnd="@id/remote_video_view_container"
+            android:layout_marginTop="40dp"
+            android:onClick="leaveChannel"
+            android:text="Leave" />
+    </RelativeLayout>
+</ScrollView>

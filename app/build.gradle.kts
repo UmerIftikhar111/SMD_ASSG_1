@@ -53,7 +53,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.2.3")
     implementation("androidx.camera:camera-viewfinder:1.4.0-alpha01")
     implementation("androidx.camera:camera-video:1.2.3")
-    implementation ("io.agora.rtc:voice-sdk:4.0.0.4")
+    implementation ("io.agora.rtc:full-sdk:4.0.0.4")
 }
 
 
