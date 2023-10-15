@@ -32,13 +32,12 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/start_voice_call"
+        <Button
+            android:id="@+id/joinLeaveButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:paddingTop="8dp"
-            app:srcCompat="@android:drawable/ic_menu_call" />
+            android:paddingTop="8dp" />
 
         <ImageView
             android:id="@+id/start_video_call"
@@ -227,8 +226,11 @@
 
             </LinearLayout>
 
-
-
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
 
         </LinearLayout>
