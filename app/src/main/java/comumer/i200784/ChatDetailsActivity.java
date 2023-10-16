@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Map;
 
 public class ChatDetailsActivity extends AppCompatActivity {
 
-    TextView send, contactName;
+    TextView send, contactName, status;
     EditText messageText;
 
     private FirebaseAuth firebaseAuth;
@@ -39,12 +40,14 @@ public class ChatDetailsActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_details);
 
         send = findViewById(R.id.send);
+        status = findViewById(R.id.status);
         messageText = findViewById(R.id.messageText);
         contactName=findViewById(R.id.contactName);
 
@@ -62,10 +65,22 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
         String receiverUid = getIntent().getStringExtra("receiverUid");
         String receiverProfileUrl = getIntent().getStringExtra("receiverProfileUrl");
-
         String senderUid = firebaseAuth.getCurrentUser().getUid();
 
-        // Define your DatabaseReference
+        DatabaseReference userStatusRef = FirebaseDatabase.getInstance().getReference("all-users/" + receiverUid + "/status");
+        userStatusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get the user's status (online or offline)
+                Boolean isOnline = dataSnapshot.getValue(Boolean.class);
+                if (isOnline != null && isOnline) { status.setText("Online");}
+                else { status.setText("Offline");}
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {}
+        });
+
+
         DatabaseReference messagesRef = databaseReference.child("chats");
         messagesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,8 +94,16 @@ public class ChatDetailsActivity extends AppCompatActivity {
                     // Check if the message meets either of the conditions
                     if ((message.getSenderUid().equals(senderUid) && message.getReceiverUid().equals(receiverUid)) ||
                             (message.getSenderUid().equals(receiverUid) && message.getReceiverUid().equals(senderUid))) {
+
+                        if(senderUid.equals(message.getReceiverUid())){
+                            message.setReadStatus("true");
+                            // Update the message in the database with the new readStatus
+                            String messageId = messageSnapshot.getKey();
+                            messagesRef.child(messageId).setValue(message);
+                        }
+
                         messageList.add(message);
-                    }
+                        }
                 }
 
                 // Notify the adapter that the data has changed
@@ -100,7 +123,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
             if (!message.isEmpty()) {
                 // Create a message object
-                MessageModel messageModel = new MessageModel(senderUid, receiverUid, message);
+                MessageModel messageModel = new MessageModel(senderUid, receiverUid, message,"text");
                 messageModel.setSenderProfileUrl(receiverProfileUrl);
                 // Generate a unique key for the message
                 String messageKey = databaseReference.child("chats").push().getKey();
@@ -113,6 +136,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
             }else
                 Toast.makeText(this, "Please enter a message to send.", Toast.LENGTH_SHORT).show();
         });
+
+
 
         // close screen icon
         ImageView navBackArrowIcn = findViewById(R.id.nav_back_to_chat);
@@ -136,4 +161,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
 }

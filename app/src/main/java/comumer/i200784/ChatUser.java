@@ -6,7 +6,7 @@ public class ChatUser {
     private String username;
     private String profilePictureUrl;
     private String status;
-
+    private int numOfUnreadMessages;
     public ChatUser(){}
 
     public ChatUser(String userId, String username, String profilePictureUrl, String status) {
@@ -14,6 +14,7 @@ public class ChatUser {
         this.username = username;
         this.profilePictureUrl = profilePictureUrl;
         this.status = status;
+        numOfUnreadMessages=0;
     }
 
     public String getUserId() {
@@ -48,5 +49,11 @@ public class ChatUser {
         this.status = status;
     }
 
+    public int getNumOfUnreadMessages() {
+        return numOfUnreadMessages;
+    }
 
+    public void setNumOfUnreadMessages(int numOfUnreadMessages) {
+        this.numOfUnreadMessages = numOfUnreadMessages;
+    }
 }

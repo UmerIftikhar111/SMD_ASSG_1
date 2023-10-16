@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.PropertyName;
 
 public class User {
+    private String uid;
     private String name;
     private String email;
     private String contact;
@@ -109,6 +110,12 @@ public class User {
         this.mainProfileUrl = mainProfileUrl;
     }
 
+    public String getUid() {
+        return uid;
+    }
 
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }
 

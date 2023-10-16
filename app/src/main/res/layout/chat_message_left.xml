@@ -4,9 +4,9 @@
     android:id="@+id/receiver_msgContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
+    android:layout_marginLeft="10dp"
     android:layout_marginTop="60dp"
-    android:background="@color/white"
+    android:background="#FFFFFF"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView

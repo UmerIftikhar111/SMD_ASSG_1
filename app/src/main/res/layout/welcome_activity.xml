@@ -19,15 +19,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="Welcome,"
+            android:text="Hello,"
             android:textColor="#AA7676"
             android:textSize="20dp"
             android:textStyle="bold" />
         <TextView
+            android:id="@+id/current_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:text="Umer"
+            android:text="there!"
             android:textColor="#CDDC39"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -49,7 +50,7 @@
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
@@ -69,7 +70,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewAds"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal" />
@@ -85,207 +86,12 @@
                 android:layout_marginTop="10dp"
                 />
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="400dp"
-                    android:layout_height="200dp"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="20dp">
-
-                    <RelativeLayout
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/rounded_corners_textfields"
-
-                        >
-
-
-                        <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="100dp"
-                            android:scaleX="2"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:text="Item Name"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="120dp"
-                            android:paddingRight="10dp"
-                            android:text="10$/hr"
-                            android:textColor="#CDDC39"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:text="Islamabad"
-                            android:textSize="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="7th Mar"
-                            android:textSize="10dp" />
-
-                        <ImageView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="15dp"
-                            android:layout_marginTop="145dp"
-                            app:srcCompat="@android:drawable/ic_menu_myplaces" />
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/rounded_corners_textfields"
-
-                        >
-
-
-                        <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="100dp"
-                            android:scaleX="2"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:text="Item Name"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="120dp"
-                            android:paddingRight="10dp"
-                            android:text="10$/hr"
-                            android:textColor="#CDDC39"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:text="Islamabad"
-                            android:textSize="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="7th Mar"
-                            android:textSize="10dp" />
-
-                        <ImageView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="15dp"
-                            android:layout_marginTop="145dp"
-                            app:srcCompat="@android:drawable/ic_menu_myplaces" />
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="#EAE3E3">
-
-
-                        <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="100dp"
-                            android:scaleX="2"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="120dp"
-                            android:paddingLeft="10dp"
-                            android:text="Item Name"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="120dp"
-                            android:paddingRight="10dp"
-                            android:text="10$/hr"
-                            android:textColor="#CDDC39"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:text="Islamabad"
-                            android:textSize="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="145dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="7th Mar"
-                            android:textSize="10dp" />
-
-                        <ImageView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="15dp"
-                            android:layout_marginTop="145dp"
-                            app:srcCompat="@android:drawable/ic_menu_myplaces" />
-
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewAdsPersonal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" />
 
             <TextView
                 android:layout_width="wrap_content"

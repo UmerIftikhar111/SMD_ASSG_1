@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,9 +45,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         ChatUser contact = contactList.get(position);
         holder.username.setText(contact.getUsername());
-        holder.messageInfo.setText("no new message");
-        if(contact.getProfilePictureUrl()!=null && !contact.getProfilePictureUrl().isEmpty())
-         Picasso.get().load(contact.getProfilePictureUrl()).into(holder.displayPic);
+
+        if(contact.getNumOfUnreadMessages()==0)
+            holder.messageInfo.setText("no new message");
+        else
+            holder.messageInfo.setText( contact.getNumOfUnreadMessages() + " new messages");
+
+        if(contact.getProfilePictureUrl()!=null && !contact.getProfilePictureUrl().isEmpty()) {
+            Picasso.get().load(contact.getProfilePictureUrl()).into(holder.displayPic);
+        }
 
         holder.navigator.setOnClickListener(v -> {
             String receiverUid = contact.getUserId();
@@ -53,7 +61,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             Intent intent = new Intent(context, ChatDetailsActivity.class);
             intent.putExtra("receiverUid", receiverUid);
             intent.putExtra("receiverUsername", contact.getUsername());
-            intent.putExtra("receiverProfileUrl", contact.getProfilePictureUrl());
+            intent.putExtra("receiverProfileUrl", User.currentUser.getMainProfileUrl());
             context.startActivity(intent);
 
         });

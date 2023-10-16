@@ -50,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (User.currentUser.getMainProfileUrl() != null) {
             String profileUrl = User.currentUser.getMainProfileUrl();
+            if(profileUrl!="")
             Picasso.get().load(profileUrl).into(profile_pic);
         }
 

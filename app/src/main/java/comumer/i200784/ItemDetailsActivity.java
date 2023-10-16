@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 public class ItemDetailsActivity extends AppCompatActivity {
 
-    ImageView itemImage, posterImage;
+    ImageView itemImage, posterImage, chatWithPoster;
     TextView itemRate, itemName, itemDescription, itemLocation, itemDate, posterName, posterItemsAdded;
 
     @Override
@@ -32,6 +32,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         itemDescription = findViewById(R.id.itemDescription);
         itemLocation = findViewById(R.id.itemLocation);
         itemDate = findViewById(R.id.itemDate);
+        chatWithPoster = findViewById(R.id.chatWithPoster);
 
         // Set values from the Advertisement object
         itemRate.setText(advertisement.getRate()+"$");
@@ -57,6 +58,16 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 Picasso.get().load(posterUser.getMainProfileUrl()).into(posterImage);
 
             }
+        });
+
+        chatWithPoster.setOnClickListener(v -> {
+
+            Intent intent = new Intent(ItemDetailsActivity.this, ChatDetailsActivity.class);
+            intent.putExtra("receiverUid", posterUid);
+            intent.putExtra("receiverUsername", posterName.getText());
+            intent.putExtra("receiverProfileUrl", User.currentUser.getMainProfileUrl());
+            startActivity(intent);
+
         });
 
         // back arrow icon

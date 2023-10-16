@@ -13,6 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -82,16 +88,43 @@ public class MainActivity extends AppCompatActivity {
                                             String profileUrl = document.getString("mainProfileUrl");
 
                                             // Retrieve other user data as needed
-                                            User.currentUser=null;
-                                            User.currentUser = new User(name,email, contact, country, city);
-
+                                          //  User.currentUser=null;
+                                            User curr = new User(name,email, contact, country, city);
+                                            curr.setUid(userUid);
+                                            User.currentUser=curr;
                                             User.currentUser.setMainProfileUrl(profileUrl);
                                             User.currentUser.setCoverProfileUrl(coverUrl);
+
+                                            DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+                                            DatabaseReference userStatusRef = FirebaseDatabase.getInstance().getReference("all-users/"+userUid);
+
+                                            connectedRef.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot snapshot) {
+                                                    boolean connected = snapshot.getValue(Boolean.class);
+                                                    if (connected) {
+                                                        // User is connected
+                                                        userStatusRef.child("online").setValue(true);
+                                                        userStatusRef.child("lastOnline").onDisconnect().setValue(ServerValue.TIMESTAMP);
+                                                    } else {
+                                                        // User is disconnected
+                                                        userStatusRef.child("online").setValue(false);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError error) {
+                                                    // Handle error
+                                                }
+                                            });
 
 
                                             // Display a toast message with user data
                                             String toastMessage = "Name: " + name + "\nEmail: " + email;
                                             Toast.makeText(MainActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                                            // Redirect to the welcome activity or your desired destination
+                                            Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
+                                            startActivity(intent);
                                         } else {
                                             // The document does not exist
                                             Toast.makeText(MainActivity.this, "User document not found", Toast.LENGTH_SHORT).show();
@@ -105,9 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                // Redirect to the welcome activity or your desired destination
-                                Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
-                                startActivity(intent);
+
                             }
                         } else {
                             // Login failed

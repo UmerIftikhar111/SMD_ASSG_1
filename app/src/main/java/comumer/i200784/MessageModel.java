@@ -11,14 +11,19 @@ public class MessageModel {
     private String message;
     private String time;
     private String senderProfileUrl;
+    private String readStatus;
+    private String messageType;
 
     public MessageModel(){}
 
-    public MessageModel(String senderUid, String receiverUid, String message) {
+    public MessageModel(String senderUid, String receiverUid, String message, String messageType) {
         this.senderUid = senderUid;
         this.receiverUid = receiverUid;
         this.message = message;
         this.time = new SimpleDateFormat("HH:mm a", Locale.getDefault()).format(new Date());
+        readStatus="false";
+        this.messageType=messageType;
+
     }
 
     public String getSenderUid() {
@@ -59,5 +64,21 @@ public class MessageModel {
 
     public void setSenderProfileUrl(String senderProfileUrl) {
         this.senderProfileUrl = senderProfileUrl;
+    }
+
+    public String getReadStatus() {
+        return readStatus;
+    }
+
+    public void setReadStatus(String readStatus) {
+        this.readStatus = readStatus;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 }

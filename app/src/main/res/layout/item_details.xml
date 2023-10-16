@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10$"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:textSize="20dp"
                 android:textColor="#CDDC39"
                 android:textStyle="bold"
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/ hr"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item Name comes here"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:paddingLeft="22dp"
                 android:textSize="25dp"
                 />
@@ -108,7 +108,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginTop="105dp"
+                android:layout_marginTop="80dp"
                 android:paddingLeft="22dp"
                 app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Islamabad"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginLeft="50dp"
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7th March"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="80dp"
                 android:layout_alignParentRight="true"
                 android:paddingRight="20dp"
                 android:textSize="15dp"
@@ -141,7 +141,7 @@
                 android:layout_height="90dp"
                 android:padding="20dp"
                 android:text="this is sample text that is being used to fill the space."
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="100dp"
                 android:textSize="20dp"
                 />
 
@@ -149,51 +149,43 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_marginTop="190dp"
+                android:layout_above="@+id/rentBtn"
+                android:layout_marginBottom="10dp">
 
-                >
-
-                <ImageView
-
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/posterImage"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/umer_profile" />
+
 
                 <TextView
                     android:id="@+id/posterName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ryan Gosling"
                     android:layout_marginLeft="120dp"
+                    android:text="Ryan Gosling"
                     android:textSize="20dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/posterItemsAdded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="24 Items rented"
                     android:layout_marginLeft="120dp"
-                    android:textSize="15dp"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:text="24 Items rented"
+                    android:textSize="15dp" />
 
                 <ImageView
 
                     android:id="@+id/chatWithPoster"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/chat_icn"
                     android:layout_alignParentRight="true"
-                    />
-
-
-
-
-
-
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/chat_icn" />
 
 
             </RelativeLayout>

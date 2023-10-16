@@ -2,6 +2,8 @@ package comumer.i200784;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,15 +21,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WelcomeActivityActivity extends AppCompatActivity {
+public class WelcomeActivityActivity extends AppCompatActivity{
 
-    private RecyclerView recyclerView;
-    private AdAdapter adAdapter;
+    private RecyclerView recyclerView, recyclerViewAdsPersonal;
+    private AdAdapter adAdapter, adAdapterForPersonalAds;
+    TextView current_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
+
+        current_username = findViewById(R.id.current_username);
 
         // Initialize RecyclerView and Adapter
         recyclerView = findViewById(R.id.recyclerViewAds);
@@ -35,13 +40,21 @@ public class WelcomeActivityActivity extends AppCompatActivity {
         adAdapter = new AdAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adAdapter);
 
-        // Fetch items from Firestore
-        fetchItemsFromFirestore();
+        recyclerViewAdsPersonal =findViewById(R.id.recyclerViewAdsPersonal);
+        recyclerViewAdsPersonal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        adAdapterForPersonalAds = new AdAdapter(new ArrayList<>(), this);
+        recyclerViewAdsPersonal.setAdapter(adAdapterForPersonalAds);
+
+        fetchAllItemsFromFirestore();
+
+        fetchMyItemsFromFirestore();
+
+        // Set the username
+        current_username.setText(User.currentUser.getName());
 
         // Setup icons and click actions
         setupIcons();
     }
-
     private void setupIcons() {
         // home icon
         ImageView homeIcn = findViewById(R.id.homeIcon);
@@ -81,7 +94,7 @@ public class WelcomeActivityActivity extends AppCompatActivity {
     }
 
 
-    private void fetchItemsFromFirestore() {
+    private void fetchAllItemsFromFirestore() {
         // Initialize Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -91,6 +104,7 @@ public class WelcomeActivityActivity extends AppCompatActivity {
         itemsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<Advertisement> itemList = new ArrayList<>();
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
                 Advertisement ad = new Advertisement();
                 ad.setName(document.get("itemName").toString());
                 ad.setDate(document.get("itemDate").toString());
@@ -115,4 +129,47 @@ public class WelcomeActivityActivity extends AppCompatActivity {
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
         });
     }
+
+    private void fetchMyItemsFromFirestore() {
+        // Initialize Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Reference to the "items" collection
+        CollectionReference itemsRef = db.collection("items");
+
+        itemsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<Advertisement> itemList = new ArrayList<>();
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+                if(document.get("posterUid").toString().equals(User.currentUser.getUid()) ||
+                        document.get("renterUid").toString().equals(User.currentUser.getUid()) ){
+                    Advertisement ad = new Advertisement();
+                    ad.setName(document.get("itemName").toString());
+                    ad.setDate(document.get("itemDate").toString());
+                    ad.setLocation(document.get("itemCity").toString());
+                    ad.setRate(Double.parseDouble(document.get("itemRate").toString()));
+                    ad.setDescription(document.get("itemDesc").toString());
+                    ad.setPictureUrl(document.get("imageUrl").toString());
+                    ad.setPosterUid(document.get("posterUid").toString());
+                    ad.setRenterUid(document.get("renterUid").toString());
+
+                    ad.setItemUid(document.getId());
+
+                    itemList.add(ad);
+                }
+
+
+            }
+
+            Toast.makeText(this, "Fetched item docs", Toast.LENGTH_SHORT).show();
+            // Update the adapter with the fetched itemList
+            adAdapterForPersonalAds.setItemList(itemList);
+            adAdapterForPersonalAds.notifyDataSetChanged();
+        }).addOnFailureListener(e -> {
+            String errorMessage = "Failed to fetch data from Firestore. Please try again later.";
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+
 }
