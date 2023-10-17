@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -149,7 +150,19 @@ public class Video extends AppCompatActivity {
                 capture.setEnabled(true);
             } else if (videoRecordEvent instanceof VideoRecordEvent.Finalize) {
                 if (!((VideoRecordEvent.Finalize) videoRecordEvent).hasError()) {
-                    String msg = "Video capture succeeded: " + ((VideoRecordEvent.Finalize) videoRecordEvent).getOutputResults().getOutputUri();
+                    // Get the output URI
+                    Uri outputUri = ((VideoRecordEvent.Finalize) videoRecordEvent).getOutputResults().getOutputUri();
+
+                    // Create an Intent to send the URI to the previous activity
+                    Intent resultIntent = new Intent();
+                    resultIntent.setData(outputUri);
+
+                    // Set the result for the previous activity
+                    setResult(RESULT_OK, resultIntent);
+                    finish(); // Close this activity
+
+                    // Show a Toast message (optional)
+                    String msg = "Video capture succeeded: " + outputUri;
                     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                 } else {
                     recording.close();
@@ -161,5 +174,6 @@ public class Video extends AppCompatActivity {
             }
         });
     }
+
 
 }

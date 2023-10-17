@@ -138,11 +138,11 @@ public class ItemActivity extends AppCompatActivity {
                 case 1:
                     if (requestCode == IMAGE_REQUEST) {
                         Intent cameraIntent = new Intent(ItemActivity.this, CaptureActivity.class);
-                        startActivityForResult(cameraIntent,101);
+                        startActivityForResult(cameraIntent,requestCode);
                         Toast.makeText(this, "Camera option selected", Toast.LENGTH_SHORT).show();
                     } else if (requestCode == VIDEO_REQUEST) {
                         Intent videoIntent = new Intent(ItemActivity.this, Video.class);
-                        startActivity(videoIntent);
+                        startActivityForResult(videoIntent,requestCode);
                         Toast.makeText(this, "Video option selected", Toast.LENGTH_SHORT).show();
                     }
 
@@ -210,6 +210,8 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+      //  Toast.makeText(this,data.getData().toString(),Toast.LENGTH_LONG).show();
 
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_REQUEST) {

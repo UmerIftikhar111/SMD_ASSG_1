@@ -1,7 +1,10 @@
 package comumer.i200784;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -87,23 +90,35 @@ public class CaptureActivity extends AppCompatActivity {
     }
 
     public void takePicture(ImageCapture imageCapture) {
-        final File file = new File(getExternalFilesDir(null), System.currentTimeMillis() + ".jpg");
-        ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis() + ".jpg");
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+        ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(
+                getContentResolver(),
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+        ).build();
+
         imageCapture.takePicture(outputFileOptions, Executors.newCachedThreadPool(), new ImageCapture.OnImageSavedCallback() {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                final Uri imageUri = outputFileResults.getSavedUri(); // Get the Uri of the saved image
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(CaptureActivity.this, "Image saved at: " + file.getPath(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CaptureActivity.this, "Image saved at: " + imageUri.toString(), Toast.LENGTH_SHORT).show();
                         Intent resultIntent = new Intent();
-                        resultIntent.putExtra(EXTRA_IMAGE_PATH, file.getAbsolutePath());
+                        resultIntent.setData(imageUri); // Set the Uri as the data in the intent
                         setResult(RESULT_OK, resultIntent);
-                        finish(); // Finis
+                        finish();
                     }
                 });
+
                 startCamera(cameraFacing);
             }
+
 
             @Override
             public void onError(@NonNull ImageCaptureException exception) {
