@@ -5,113 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CaptureActivity"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="631dp"
-        android:layout_marginTop="10dp"
-        android:background="#DFDBDB">
+        android:layout_height="wrap_content"
+        android:background="#DFDBDB"
+        android:padding="16dp"
+        android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:weightSum="3">
+        <ImageView
+            android:id="@+id/close_capture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/cross_capture" />
 
-            <ImageView
-                android:id="@+id/close_capture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:layout_weight="1"
-                android:src="@drawable/cross_capture"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/sun_capture"
+            android:layout_marginStart="16dp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:src="@drawable/sun_capture"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/timer_capture"/>
-
-
-        </LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/timer_capture"
+            android:layout_marginStart="16dp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="101dp"
-        android:layout_marginLeft="0dp"
-        android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:weightSum="3">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:scaleX="1"
-            android:src="@drawable/view_gallery"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:scaleX="1"
-            android:src="@drawable/take_picture"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:scaleX="1"
-            android:src="@drawable/refresh_gallery"/>
-
-
-    </LinearLayout>
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#000" />
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="90dp"
-        android:paddingTop="8dp"
-        android:weightSum="2">
+        android:padding="16dp"
+        android:gravity="center">
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:text="Photo"
-            android:backgroundTint="#FF9800"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="10dp"  />
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:text="Video"
-            android:layout_marginLeft="20dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:layout_marginBottom="10dp" />
+        <ImageView
+            android:id="@+id/gallery_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/view_gallery" />
+
+        <ImageView
+            android:id="@+id/camera_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/take_picture"
+            android:layout_marginStart="16dp" />
+
+        <ImageView
+            android:id="@+id/flip"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/refresh_gallery"
+            android:layout_marginStart="16dp" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp">
 
+        <Button
+            android:id="@+id/photo_button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Photo"
+            android:backgroundTint="#FF9800"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp" />
 
+        <Button
+            android:id="@+id/video_button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Video"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp" />
 
-
-
-
-    
+    </LinearLayout>
 </LinearLayout>
