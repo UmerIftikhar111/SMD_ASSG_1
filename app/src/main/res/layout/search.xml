@@ -28,14 +28,14 @@
                 android:textStyle="bold" />
 
             <SearchView
+                android:id="@+id/search"
                 android:layout_width="313dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/rounded_corners_textfields"
                 android:queryHint="Search"
-                android:tooltipText="Search"
 
-                />
+                android:tooltipText="Search" />
 
             <TextView
                 android:layout_width="wrap_content"

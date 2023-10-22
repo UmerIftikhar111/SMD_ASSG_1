@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivity extends AppCompatActivity {
 
     EditText email, password;
+    Button loginBtn;
     FirebaseAuth mAuth;
 
     @Override
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+        loadSavedCredentials();
 
         // nav text view
         TextView registerTextView = findViewById(R.id.navigate_to_register);
@@ -63,10 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Login button
-        Button loginBtn = findViewById(R.id.login_btn);
+        loginBtn = findViewById(R.id.login_btn);
+
         loginBtn.setOnClickListener(view -> {
             String userEmail = email.getText().toString().trim();
             String userPassword = password.getText().toString().trim();
+
+            // Save the email and password in shared preferences
+            saveUserCredentials(userEmail, userPassword);
 
             // Sign in with Firebase Authentication
             mAuth.signInWithEmailAndPassword(userEmail, userPassword)
@@ -164,7 +174,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void saveUserCredentials(String email, String password) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.apply();
+    }
 
+    private void loadSavedCredentials() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String savedEmail = preferences.getString("email", "");
+        String savedPassword = preferences.getString("password", "");
+
+        email.setText(savedEmail);
+        password.setText(savedPassword);
+//        if(!savedPassword.isEmpty() && !savedPassword.isEmpty())
+//        loginBtn.performClick();
+    }
 
 
 }
