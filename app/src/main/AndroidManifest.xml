@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -14,15 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light"
         tools:targetApi="31">
-        <activity
-            android:name=".ChatMessageRightActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatMessageLeftActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DeleteIt"
-            android:exported="false" />
+        s
         <activity
             android:name=".Ad_item"
             android:exported="false" />
@@ -86,6 +81,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
+
+        <service android:name=".FCMNotificationService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+
+
     </application>
 
 </manifest>

@@ -125,6 +125,7 @@
         >
 
         <ImageView
+            android:id="@+id/capture_picture"
             android:layout_width="35dp"
             android:layout_height="33dp"
             android:paddingTop="8dp"
@@ -133,6 +134,7 @@
             />
 
         <ImageView
+            android:id="@+id/send_file"
         android:layout_width="30dp"
         android:layout_height="33dp"
         android:paddingTop="8dp"
@@ -142,11 +144,12 @@
         />
 
         <ImageView
-        android:layout_width="35dp"
-        android:layout_height="33dp"
-        android:paddingTop="8dp"
-        android:paddingLeft="10dp"
-        app:srcCompat="@android:drawable/ic_menu_crop"
+            android:id="@+id/send_picture"
+            android:layout_width="35dp"
+            android:layout_height="33dp"
+            android:paddingTop="8dp"
+            android:paddingLeft="10dp"
+            app:srcCompat="@android:drawable/ic_menu_crop"
 
         />
 

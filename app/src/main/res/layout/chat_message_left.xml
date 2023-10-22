@@ -24,10 +24,19 @@
         android:layout_marginLeft="10dp"
         android:background="@drawable/rounded_corners_textfields"
         android:padding="7dp"
-        android:text="sample message"
         android:textColor="#35546C"
         android:textSize="18dp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/receiver_imageBody"
+        android:layout_toRightOf="@+id/receiver_profile_icon"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/rounded_corners_textfields"
+        android:padding="7dp" />
+
 
     <TextView
         android:id="@+id/receiver_time"

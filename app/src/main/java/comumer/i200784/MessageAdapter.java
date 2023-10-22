@@ -1,11 +1,13 @@
 package comumer.i200784;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,9 +23,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<MessageModel> messageList;
     private String currentUserId;
 
-    public MessageAdapter(List<MessageModel> messageList) {
+    Context context;
+
+    public MessageAdapter(Context context, List<MessageModel> messageList) {
         currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        this.messageList = messageList;
+        this.context = context;
+        this.messageList=messageList;
     }
 
     public List<MessageModel> getMessageList() {
@@ -60,20 +65,46 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MessageModel message = messageList.get(position);
-        if (holder instanceof LeftMessageViewHolder) {
-            // Bind data for left message view
-            LeftMessageViewHolder leftMessageViewHolder = (LeftMessageViewHolder) holder;
-            leftMessageViewHolder.receiverMessageBody.setText(message.getMessage());
-            leftMessageViewHolder.receiverTime.setText(message.getTime());
-            if(message.getSenderProfileUrl()!=null && !message.getSenderProfileUrl().isEmpty())
-                Picasso.get().load(message.getSenderProfileUrl()).into(leftMessageViewHolder.receiver_profile_icon);
 
-        } else if (holder instanceof RightMessageViewHolder) {
-            // Bind data for right message view
-            RightMessageViewHolder rightMessageViewHolder = (RightMessageViewHolder) holder;
-            rightMessageViewHolder.senderMessageBody.setText(message.getMessage());
-            rightMessageViewHolder.senderTime.setText(message.getTime());
+        if(message.getMessageType().equals("text")){
+            if (holder instanceof LeftMessageViewHolder) {
+                // Bind data for left message view
+                LeftMessageViewHolder leftMessageViewHolder = (LeftMessageViewHolder) holder;
+                leftMessageViewHolder.receiverMessageBody.setText(message.getMessage());
+                leftMessageViewHolder.receiverTime.setText(message.getTime());
+                if(message.getSenderProfileUrl()!=null && !message.getSenderProfileUrl().isEmpty())
+                    Picasso.get().load(message.getSenderProfileUrl()).into(leftMessageViewHolder.receiver_profile_icon);
+
+            } else if (holder instanceof RightMessageViewHolder) {
+                // Bind data for right message view
+                RightMessageViewHolder rightMessageViewHolder = (RightMessageViewHolder) holder;
+                rightMessageViewHolder.senderMessageBody.setText(message.getMessage());
+                rightMessageViewHolder.senderTime.setText(message.getTime());
+            }
+        }else if( message.getMessageType().equals("img") ){
+
+            if (holder instanceof LeftMessageViewHolder) {
+                // Bind data for left message view
+                LeftMessageViewHolder leftMessageViewHolder = (LeftMessageViewHolder) holder;
+                Picasso.get().load(message.getMessage()).into(leftMessageViewHolder.receiverImageBody);
+                leftMessageViewHolder.receiverTime.setText(message.getTime());
+                if(message.getSenderProfileUrl()!=null && !message.getSenderProfileUrl().isEmpty())
+                    Picasso.get().load(message.getSenderProfileUrl()).into(leftMessageViewHolder.receiver_profile_icon);
+
+            } else if (holder instanceof RightMessageViewHolder) {
+                // Bind data for right message view
+                RightMessageViewHolder rightMessageViewHolder = (RightMessageViewHolder) holder;
+                Picasso.get().load(message.getMessage()).into(rightMessageViewHolder.imageBody);
+                rightMessageViewHolder.imageBody.setMaxHeight(20);
+                rightMessageViewHolder.imageBody.setMinimumHeight(20);
+                rightMessageViewHolder.senderTime.setText(message.getTime());
+            }
+            
+        }else{
+
         }
+
+
     }
 
     @Override
@@ -83,6 +114,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class LeftMessageViewHolder extends RecyclerView.ViewHolder {
         TextView receiverMessageBody;
+        ImageView receiverImageBody;
         TextView receiverTime;
         ImageView receiver_profile_icon;
 
@@ -91,19 +123,25 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             receiverMessageBody = itemView.findViewById(R.id.receiver_messageBody);
             receiverTime = itemView.findViewById(R.id.receiver_time);
             receiver_profile_icon = itemView.findViewById(R.id.receiver_profile_icon);
+            receiverImageBody = itemView.findViewById(R.id.receiver_imageBody);
         }
     }
 
     static class RightMessageViewHolder extends RecyclerView.ViewHolder {
         TextView senderMessageBody;
         TextView senderTime;
+        ImageView imageBody;
 
         RightMessageViewHolder(View itemView) {
             super(itemView);
             senderMessageBody = itemView.findViewById(R.id.messageBody);
             senderTime = itemView.findViewById(R.id.sender_time);
+            imageBody = itemView.findViewById(R.id.imageBody);
         }
     }
+
+
+
 }
 
 

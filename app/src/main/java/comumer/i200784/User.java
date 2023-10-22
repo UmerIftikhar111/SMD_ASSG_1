@@ -10,6 +10,8 @@ public class User {
     private String contact;
     private String country;
     private String city;
+
+    private String FCMToken;
     private int itemsPosted;
     private int itemsRented;
     private String coverProfileUrl;
@@ -116,6 +118,15 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+
+    public String getFCMToken() {
+        return FCMToken;
+    }
+
+    public void setFCMToken(String FCMToken) {
+        this.FCMToken = FCMToken;
     }
 }
 

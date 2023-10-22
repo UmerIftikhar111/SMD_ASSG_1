@@ -29,10 +29,30 @@
         android:layout_marginLeft="10dp"
         android:background="@drawable/rounded_corners_textfields"
         android:padding="7dp"
-        android:text="sample message"
         android:textColor="#35546C"
         android:textSize="18dp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageBody"
+        android:layout_toRightOf="@+id/sender_time"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/rounded_corners_textfields"
+        android:padding="7dp"
+        />
+
+    <VideoView
+        android:id="@+id/videoBody"
+        android:layout_toRightOf="@+id/sender_time"
+        android:layout_width="180dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/rounded_corners_textfields"
+        android:padding="7dp"
+        />
 
 
 

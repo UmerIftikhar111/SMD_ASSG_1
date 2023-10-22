@@ -2,15 +2,20 @@ package comumer.i200784;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
         // Login button
         Button loginBtn = findViewById(R.id.login_btn);
         loginBtn.setOnClickListener(view -> {
@@ -78,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                     if (task1.isSuccessful()) {
                                         DocumentSnapshot document = task1.getResult();
                                         if (document.exists()) {
-                                            // The document exists, and you can access its data
                                             String name = document.getString("name");
                                             String email = document.getString("email");
                                             String country = document.getString("country");
@@ -94,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
                                             User.currentUser=curr;
                                             User.currentUser.setMainProfileUrl(profileUrl);
                                             User.currentUser.setCoverProfileUrl(coverUrl);
+
+                                            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task3 -> {
+                                                if(task3.isSuccessful()){
+                                                    String token = task3.getResult();
+                                                    User.currentUser.setFCMToken(token);
+                                                    userDocument.update("fcmtoken",token);
+                                                }
+                                            });
 
                                             DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
                                             DatabaseReference userStatusRef = FirebaseDatabase.getInstance().getReference("all-users/"+userUid);
@@ -148,6 +163,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 
 }
 
