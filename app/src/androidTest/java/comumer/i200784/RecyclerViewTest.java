@@ -5,13 +5,10 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class RecyclerViewTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -28,16 +25,18 @@ public class MainActivityTest {
         // Perform click action on the login button
         Espresso.onView(ViewMatchers.withId(R.id.login_btn)).perform(ViewActions.click());
 
-        // Wait for a while to ensure the toast is displayed
+        // Wait for a while
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Check if the R.id.current_username label has 'daniyal' on it
-        Espresso.onView(ViewMatchers.withId(R.id.current_username))
-                .check(ViewAssertions.matches(ViewMatchers.withText("daniyal")));
+        // Check if the RecyclerView with id recyclerViewAds is displayed
+        Espresso.onView(ViewMatchers.withId(R.id.recyclerViewAds))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
     }
+
 }
+
