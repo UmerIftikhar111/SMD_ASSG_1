@@ -58,7 +58,7 @@ public class ItemActivity extends AppCompatActivity {
 
     private static final int IMAGE_REQUEST = 1;
     private static final int VIDEO_REQUEST = 2;
-    private Uri selectedImageUri;
+    public Uri selectedImageUri;
     private Uri selectedVideoUri;
 
     private CameraManager cameraManager;
