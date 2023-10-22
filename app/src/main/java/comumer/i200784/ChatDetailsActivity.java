@@ -1,5 +1,8 @@
 package comumer.i200784;
 
+
+
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +57,9 @@ import okhttp3.Response;
 
 public class ChatDetailsActivity extends AppCompatActivity {
 
+    private static final int VIDEO_REQUEST = 2;
     TextView send, contactName, status;
+    private static final int IMAGE_REQUEST = 1;
     EditText messageText;
     ImageView send_picture;
     private FirebaseAuth firebaseAuth;
@@ -88,6 +93,9 @@ public class ChatDetailsActivity extends AppCompatActivity {
         messageText = findViewById(R.id.messageText);
         contactName=findViewById(R.id.contactName);
         send_picture = findViewById(R.id.send_picture);
+        ImageView capture  = findViewById(R.id.capture_picture);
+
+        capture.setOnClickListener(view -> showMediaSelectionDialog(IMAGE_REQUEST));
 
         contactName.setText(getIntent().getStringExtra("receiverUsername"));
 
@@ -205,15 +213,54 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void showMediaSelectionDialog(int requestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Media Source");
+        builder.setItems(new CharSequence[]{"Gallery", "Camera"}, (dialog, which) -> {
+            switch (which) {
+                case 0:
+                    // Gallery option selected
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    if (requestCode == IMAGE_REQUEST) {
+                        galleryIntent.setType("image/*");
+                    } else if (requestCode == VIDEO_REQUEST) {
+                        galleryIntent.setType("video/*");
+                    }
+                    startActivityForResult(galleryIntent, requestCode);
+                    break;
+                case 1:
+                    if (requestCode == IMAGE_REQUEST) {
+                        Intent cameraIntent = new Intent(ChatDetailsActivity.this, CaptureActivity.class);
+                        startActivityForResult(cameraIntent,requestCode);
+                        Toast.makeText(this, "Camera option selected", Toast.LENGTH_SHORT).show();
+                    } else if (requestCode == VIDEO_REQUEST) {
+                        Intent videoIntent = new Intent(ChatDetailsActivity.this, Video.class);
+                        startActivityForResult(videoIntent,requestCode);
+                        Toast.makeText(this, "Video option selected", Toast.LENGTH_SHORT).show();
+                    }
+
+                    break;
+            }
+        });
+        builder.show();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData();
-            uploadImageToStorage(selectedImageUri);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_REQUEST) {
+                selectedImageUri = data.getData();
+                uploadImageToStorage(selectedImageUri);
+                Toast.makeText(this, "Image selected", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == VIDEO_REQUEST) {
+                Uri selectedVideoUri = data.getData();
+                Toast.makeText(this, "Video selected", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+    
 
     private void uploadImageToStorage(Uri imageUri) {
         // Create a unique document ID for the image
