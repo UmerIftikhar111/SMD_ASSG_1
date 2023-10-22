@@ -130,7 +130,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
 
             }
-            
+
         }else{
 
         }
@@ -309,7 +309,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         // 4. Compare the time difference to 5 minutes (300,000 milliseconds)
         if (Math.abs(timeDifference) < 300000) {
-           return true;
+            return true;
         } else {
             Toast.makeText(context, "The time has passed! ", Toast.LENGTH_SHORT).show();
             return false;
