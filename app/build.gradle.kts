@@ -62,6 +62,12 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.3.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.3.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation ("androidx.test.ext:junit-ktx:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.3.0")
+    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.3.0")
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.3.0")
+    implementation ("androidx.test.espresso:espresso-idling-resource:3.3.0")
+    androidTestImplementation ("androidx.test.espresso:espresso-idling-resource:3.3.0")
 
 
 }

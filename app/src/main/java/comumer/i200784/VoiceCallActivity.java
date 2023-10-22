@@ -30,7 +30,7 @@ public class VoiceCallActivity extends AppCompatActivity {
     // Fill the channel name.
     private String channelName = "Spot IT";
     // Fill the temp token generated on Agora Console.
-    private String token = "007eJxTYJjyjYclfr3zP/96I1ue+ZFpHl8yz97j1T/N8/hezpGdAp0KDAZGFsbJSQamRqaWBiaWicmJiammBkbmxomJ5qnmaWZp6nu1UhsCGRm0dhxlYWSAQBCfnSG4IL9EwTOEgQEAZ5QfXg==";
+    private String token = "007eJxTYLiaI/Fl7Sbrz8l/1zy8GCu/TTFDWZ3v3FcffqGgfsdtsbEKDAZGFsbJSQamRqaWBiaWicmJiammBkbmxomJ5qnmaWZpXX9MUhsCGRn+sR1nYmSAQBCfnSG4IL9EwTOEgQEAvsEgYw==";
     // An integer that identifies the local user.
     private int uid = 0;
     // Track the status of your connection
