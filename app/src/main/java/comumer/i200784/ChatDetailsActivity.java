@@ -152,7 +152,6 @@ public class ChatDetailsActivity extends AppCompatActivity {
                         messageList.add(message);
                         }
                 }
-
                 // Notify the adapter that the data has changed
                 messageAdapter.notifyDataSetChanged();
             }

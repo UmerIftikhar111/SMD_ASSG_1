@@ -21,6 +21,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText name, email, contact, password;
@@ -70,46 +82,67 @@ public class RegisterActivity extends AppCompatActivity {
             String selectedCountry = country.getSelectedItem().toString();
             String selectedCity = city.getSelectedItem().toString();
 
+            URL url = null;
+            try {
+                url = new URL("http://127.0.0.1/SOPT-IT/register.php");
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+            HttpURLConnection urlConnection = null;
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            try {
 
-            mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                    .addOnCompleteListener(RegisterActivity.this, task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                urlConnection.setDoOutput(true);
 
-                            if (user != null) {
+                // Write registration data to the request body
+                OutputStream outputStream = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                                // User registration successful
-                                // Create a Firestore reference for the user
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference userRef = db.collection("users").document(user.getUid());
+                String postData = "userName=" + URLEncoder.encode(userName, "UTF-8") +
+                        "&userEmail=" + URLEncoder.encode(userEmail, "UTF-8") +
+                        "&userPassword=" + URLEncoder.encode(userPassword, "UTF-8") +
+                        "&userContact=" + URLEncoder.encode(userContact, "UTF-8") +
+                        "&selectedCountry=" + URLEncoder.encode(selectedCountry, "UTF-8") +
+                        "&selectedCity=" + URLEncoder.encode(selectedCity, "UTF-8");
 
-                                // Create a user object with additional data
-                                User newUser = new User(userName, userEmail, userContact, selectedCountry, selectedCity);
-                                newUser.setItemsPosted(0);
-                                newUser.setItemsRented(0);
-                                newUser.setCoverProfileUrl("");
-                                newUser.setMainProfileUrl("");
+                writer.write(postData);
+                writer.flush();
+                writer.close();
+                outputStream.close();
 
-                                // Set the user object in Firestore
-                                userRef.set(newUser)
-                                        .addOnSuccessListener(aVoid -> {
-                                            // Data has been successfully saved in Firestore
-                                            Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            // Error handling
-                                            Toast.makeText(RegisterActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show();
-                                        });
-                            }
-                        } else {
-                            // User registration failed
-                            Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                // Read the response from the server
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                // Handle the response as needed
+                if (response.toString().equals("User registered successfully")) {
+                    // Registration successful, navigate to the main activity
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Registration failed, show an error message
+                    Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                urlConnection.disconnect();
+            }
+
+
 
         });
 

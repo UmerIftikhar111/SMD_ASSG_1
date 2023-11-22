@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (task1.isSuccessful()) {
                                         DocumentSnapshot document = task1.getResult();
                                         if (document.exists()) {
+
                                             String name = document.getString("name");
                                             String email = document.getString("email");
                                             String country = document.getString("country");
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                                             String profileUrl = document.getString("mainProfileUrl");
 
                                             // Retrieve other user data as needed
-                                          //  User.currentUser=null;
+                                            //  User.currentUser=null;
                                             User curr = new User(name,email, contact, country, city);
                                             curr.setUid(userUid);
                                             User.currentUser=curr;

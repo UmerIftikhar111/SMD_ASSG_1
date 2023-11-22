@@ -26,6 +26,7 @@ public class RecyclerViewTest {
         Espresso.onView(ViewMatchers.withId(R.id.login_btn)).perform(ViewActions.click());
 
         // Wait for a while
+
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
