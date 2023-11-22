@@ -1,6 +1,7 @@
 package comumer.i200784;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -191,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
             String userPassword = password.getText().toString().trim();
 
             // Save the email and password in shared preferences
-           // saveUserCredentials(userEmail, userPassword);
+            // saveUserCredentials(userEmail, userPassword);
 
-            String loginApiUrl = "https://localhost/SPOT-IT/login.php";
+            String loginApiUrl = Utility.ip + "/SPOT-IT/login.php";
             JSONObject requestBody = new JSONObject();
             try {
                 requestBody.put("userEmail", userEmail);
@@ -202,113 +203,175 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // Make a synchronous HTTP request (you may need to handle this in a separate thread)
-            String response = makeSyncHttpRequest(loginApiUrl, requestBody);
-
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-
-                if (success) {
-                    // Login successful
-                    JSONObject userData = jsonResponse.getJSONObject("userData");
-
-                    String userId = userData.getString("userId");
-                    String name = userData.getString("userName");
-                    String userContact = userData.getString("userContact");
-                    String selectedCountry = userData.getString("selectedCountry");
-                    String selectedCity = userData.getString("selectedCity");
-                    int itemsRented = Integer.parseInt(userData.getString("itemsRented"));
-                    int itemsPosted = Integer.parseInt(userData.getString("itemsPosted"));
-                    String mainProfileUrl= userData.getString("mainProfileUrl");
-                    String coverProfileUrl= userData.getString("coverProfileUrl");
-
-
-                    // Create a User object
-                    User currentUser = new User(name, userEmail, userContact, selectedCountry, selectedCity, itemsRented,itemsPosted,mainProfileUrl,coverProfileUrl );
-                    currentUser.setUid(userId);
-
-                    // Add additional fields to the User object as needed
-
-                    // Set the current user in your application
-                    User.currentUser = currentUser;
-
-                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task3 -> {
-                        if(task3.isSuccessful()){
-                            String token = task3.getResult();
-                            User.currentUser.setFCMToken(token);
-                        }
-                    });
-
-                    // Display a toast message with user data
-                    String toastMessage = "Welcome " + name + "!";
-                    Toast.makeText(MainActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
-
-                    // Redirect to the welcome activity or your desired destination
-                    Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
-                    startActivity(intent);
-                } else {
-                    // Login failed
-                    String message = jsonResponse.getString("message");
-                    Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            // Execute the login task asynchronously
+            new LoginTask().execute(loginApiUrl, requestBody.toString());
         });
 
+
+
+
     }
 
-    public static String makeSyncHttpRequest(String apiUrl, JSONObject requestBody) {
-        String response = "";
+    // Implementation of makeSyncHttpRequest
+    private String makeSyncHttpRequest(String apiUrl, String requestBody) {
+
+
+
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String result = null;
 
         try {
+            // Create URL object
             URL url = new URL(apiUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Open connection
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Set HTTP method
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            // Enable input/output streams
+            urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
 
-            // Write the JSON body to the request
+            // Set request headers
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            // Get output stream and write request body
             OutputStream outputStream = urlConnection.getOutputStream();
-            outputStream.write(requestBody.toString().getBytes());
-            outputStream.flush();
+            outputStream.write(requestBody.getBytes("UTF-8"));
             outputStream.close();
 
-            // Read the response
-            InputStream inputStream = urlConnection.getInputStream();
-            response = convertStreamToString(inputStream);
-            inputStream.close();
+            // Get response code
+            int responseCode = urlConnection.getResponseCode();
+            //Toast.makeText(this, "Res code.: "+ responseCode , Toast.LENGTH_SHORT).show();
 
-            urlConnection.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Log.i("response code", String.valueOf(responseCode));
 
-        return response;
-    }
-
-    private static String convertStreamToString(InputStream inputStream) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder stringBuilder = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line).append('\n');
+            // If the request was successful (status 200)
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+              //  Toast.makeText(this, "Res code0: "+ responseCode , Toast.LENGTH_SHORT).show();
+                // Read response
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                }
+                result = stringBuilder.toString();
+            } else {
+               // Toast.makeText(this, "Res code: "+ responseCode , Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // Close connections
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        return stringBuilder.toString();
+        return result;
     }
+
+
+
+
+    private class LoginTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String loginApiUrl = params[0];
+            String requestBody = params[1];
+
+
+            // Make synchronous HTTP request
+            return makeSyncHttpRequest(loginApiUrl, requestBody);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            // Process the result on the main thread
+            handleLoginResponse(result);
+        }
+    }
+
+    private void handleLoginResponse(String response) {
+        try {
+
+            if (response == null) {
+                Toast.makeText(this, "Response is null or empty: "+response, Toast.LENGTH_SHORT).show();
+                return;
+
+            }
+
+            Toast.makeText(this, "here: ", Toast.LENGTH_SHORT).show();
+
+            JSONObject jsonResponse = new JSONObject(response);
+            boolean success = jsonResponse.getBoolean("success");
+          //  Toast.makeText(this, "res: "+jsonResponse, Toast.LENGTH_SHORT).show();
+
+
+            if (success) {
+                // Login successful
+                JSONObject userData = jsonResponse.getJSONObject("userData");
+
+               // Toast.makeText(this, "Body: "+ userData, Toast.LENGTH_SHORT).show();
+               // Log.i("data: ", String.valueOf(userData));
+
+                String userId = userData.getString("userId");
+                String name = userData.getString("userName");
+                String userEmail = userData.getString("userEmail");
+                String userContact = userData.getString("userContact");
+                String selectedCountry = userData.getString("selectedCountry");
+                String selectedCity = userData.getString("selectedCity");
+                int itemsRented = Integer.parseInt(userData.getString("itemsRented"));
+                int itemsPosted = Integer.parseInt(userData.getString("itemsPosted"));
+                String mainProfileUrl = userData.getString("mainProfileUrl");
+                String coverProfileUrl = userData.getString("coverProfileUrl");
+
+                // Create a User object
+                User currentUser = new User(name, userEmail, userContact, selectedCountry, selectedCity, itemsRented, itemsPosted, mainProfileUrl, coverProfileUrl);
+                currentUser.setUid(userId);
+
+                // Add additional fields to the User object as needed
+
+                // Set the current user in your application
+                User.currentUser = currentUser;
+
+                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task3 -> {
+                    if (task3.isSuccessful()) {
+                        String token = task3.getResult();
+                        User.currentUser.setFCMToken(token);
+                    }
+                });
+
+                // Display a toast message with user data
+                String toastMessage = "Welcome " + name + "!";
+                Toast.makeText(MainActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+
+                // Redirect to the welcome activity or your desired destination
+                Intent intent = new Intent(MainActivity.this, WelcomeActivityActivity.class);
+                startActivity(intent);
+            } else {
+                // Login failed
+                String message = jsonResponse.getString("message");
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 //    private void saveUserCredentials(String email, String password) {
 //        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

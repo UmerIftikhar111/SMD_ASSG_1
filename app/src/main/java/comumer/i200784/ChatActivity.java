@@ -170,7 +170,6 @@ public class ChatActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
     }
 
 

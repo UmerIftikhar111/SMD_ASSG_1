@@ -1,7 +1,9 @@
 package comumer.i200784;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -82,41 +87,52 @@ public class RegisterActivity extends AppCompatActivity {
             String selectedCountry = country.getSelectedItem().toString();
             String selectedCity = city.getSelectedItem().toString();
 
-            URL url = null;
-            try {
-                url = new URL("https://localhost/SPOT-IT/register.php");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-            HttpURLConnection urlConnection = null;
-            try {
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("POST");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            // Execute AsyncTask
+            RegisterAsyncTask registerAsyncTask = new RegisterAsyncTask();
+            registerAsyncTask.execute(userName, userEmail, userPassword, userContact, selectedCountry, selectedCity);
+
+        });
+
+
+    }
+
+    private class RegisterAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String userName = params[0];
+            String userEmail = params[1];
+            String userPassword = params[2];
+            String userContact = params[3];
+            String selectedCountry = params[4];
+            String selectedCity = params[5];
 
             try {
+                URL url = new URL(Utility.ip + "/SPOT-IT/register.php");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
 
                 urlConnection.setDoOutput(true);
 
-                // Write registration data to the request body
                 OutputStream outputStream = urlConnection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String postData = "userName=" + URLEncoder.encode(userName, "UTF-8") +
-                        "&userEmail=" + URLEncoder.encode(userEmail, "UTF-8") +
-                        "&userPassword=" + URLEncoder.encode(userPassword, "UTF-8") +
-                        "&userContact=" + URLEncoder.encode(userContact, "UTF-8") +
-                        "&selectedCountry=" + URLEncoder.encode(selectedCountry, "UTF-8") +
-                        "&selectedCity=" + URLEncoder.encode(selectedCity, "UTF-8");
+                // Create JSON object
+                JSONObject jsonParams = new JSONObject();
+                jsonParams.put("userName", userName);
+                jsonParams.put("userEmail", userEmail);
+                jsonParams.put("userPassword", userPassword);
+                jsonParams.put("userContact", userContact);
+                jsonParams.put("selectedCountry", selectedCountry);
+                jsonParams.put("selectedCity", selectedCity);
 
-                writer.write(postData);
+
+
+                writer.write(jsonParams.toString());
                 writer.flush();
                 writer.close();
                 outputStream.close();
 
-                // Read the response from the server
                 InputStream inputStream = urlConnection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
@@ -127,26 +143,27 @@ public class RegisterActivity extends AppCompatActivity {
                     response.append(responseLine);
                 }
 
-                // Handle the response as needed
-                if (response.toString().equals("User registered successfully")) {
-                    // Registration successful, navigate to the main activity
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    // Registration failed, show an error message
-                    Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                }
+                return response.toString();
+
             } catch (IOException e) {
+                e.printStackTrace();
+                return "Error";
+            } catch (JSONException e) {
                 throw new RuntimeException(e);
-            } finally {
-                urlConnection.disconnect();
             }
+        }
 
-
-
-        });
-
-
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.contains("success")) {
+                // Registration successful, navigate to the main activity
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                // Registration failed, show an error message
+                Toast.makeText(RegisterActivity.this, "Registration failed: "+result, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
