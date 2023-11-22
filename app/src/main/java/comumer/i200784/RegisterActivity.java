@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             URL url = null;
             try {
-                url = new URL("http://127.0.0.1/SOPT-IT/register.php");
+                url = new URL("http://127.0.0.1/SPOT-IT/register.php");
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
