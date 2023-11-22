@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             // Save the email and password in shared preferences
            // saveUserCredentials(userEmail, userPassword);
 
-            String loginApiUrl = "YOUR_LOGIN_API_URL";
+            String loginApiUrl = "https://localhost/SPOT-IT/login.php";
             JSONObject requestBody = new JSONObject();
             try {
                 requestBody.put("userEmail", userEmail);
@@ -218,9 +218,14 @@ public class MainActivity extends AppCompatActivity {
                     String userContact = userData.getString("userContact");
                     String selectedCountry = userData.getString("selectedCountry");
                     String selectedCity = userData.getString("selectedCity");
+                    int itemsRented = Integer.parseInt(userData.getString("itemsRented"));
+                    int itemsPosted = Integer.parseInt(userData.getString("itemsPosted"));
+                    String mainProfileUrl= userData.getString("mainProfileUrl");
+                    String coverProfileUrl= userData.getString("coverProfileUrl");
+
 
                     // Create a User object
-                    User currentUser = new User(name, userEmail, userContact, selectedCountry, selectedCity);
+                    User currentUser = new User(name, userEmail, userContact, selectedCountry, selectedCity, itemsRented,itemsPosted,mainProfileUrl,coverProfileUrl );
                     currentUser.setUid(userId);
 
                     // Add additional fields to the User object as needed
@@ -228,10 +233,15 @@ public class MainActivity extends AppCompatActivity {
                     // Set the current user in your application
                     User.currentUser = currentUser;
 
-                    // Continue with the rest of your logic (e.g., Firebase, status update, etc.)
+                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task3 -> {
+                        if(task3.isSuccessful()){
+                            String token = task3.getResult();
+                            User.currentUser.setFCMToken(token);
+                        }
+                    });
 
                     // Display a toast message with user data
-                    String toastMessage = "Name: " + name + "\nEmail: " + userEmail;
+                    String toastMessage = "Welcome " + name + "!";
                     Toast.makeText(MainActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
 
                     // Redirect to the welcome activity or your desired destination
@@ -246,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-
 
     }
 

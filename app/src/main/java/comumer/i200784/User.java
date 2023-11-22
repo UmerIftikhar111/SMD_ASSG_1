@@ -16,6 +16,7 @@ public class User {
     private int itemsRented;
     private String coverProfileUrl;
     private String mainProfileUrl;
+
     public static User currentUser;
 
     public User() {
@@ -29,6 +30,19 @@ public class User {
         this.country = country;
         this.city = city;
     }
+
+    public User(String name, String email, String contact, String country, String city, int itemsPosted, int itemsRented, String mainProfileUrl, String coverProfileUrl) {
+        this.name = name;
+        this.email = email;
+        this.contact = contact;
+        this.country = country;
+        this.city = city;
+        this.itemsPosted = itemsPosted;
+        this.itemsRented = itemsRented;
+        this.mainProfileUrl = mainProfileUrl;
+        this.coverProfileUrl = coverProfileUrl;
+    }
+
 
     @PropertyName("name")
     public String getName() {
