@@ -2,18 +2,31 @@ package comumer.i200784;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
@@ -55,12 +68,28 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
 
         Picasso.get().load(item.getPictureUrl()).into(holder.adImage);
 
+
         holder.itemBox.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, ItemDetailsActivity.class);
             intent.putExtra("itemDetails", item);
             context.startActivity(intent);
 
+        });
+
+        holder.itemBox.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                if(item.getPosterUid().equals(User.currentUser.getUid())){
+                    new DeleteItemTask().execute(item.getItemUid());
+
+                }else{
+                    Toast.makeText(context, "You cant see me"+item.getPosterUid()+"-"+User.currentUser.getUid(), Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
         });
 
     }
@@ -87,6 +116,77 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdViewHolder> {
 
 
 
+        }
+
+
+    }
+
+    public class DeleteItemTask extends AsyncTask<String, Void, String> {
+
+        private static final String TAG = "DeleteItemTask";
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                // Your deleteItem.php endpoint URL
+                URL url = new URL(Utility.ip+"/SPOT-IT/deleteItems.php");
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                try {
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setDoOutput(true);
+
+                    // Create the JSON object for the item ID
+                    String itemId = params[0];
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("item_id", itemId);
+
+                    Log.i("json", jsonParam.toString());
+
+                    // Write JSON data to the request body
+                    OutputStream outputStream = urlConnection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    writer.write(jsonParam.toString());
+                    writer.flush();
+                    writer.close();
+                    outputStream.close();
+
+                    // Read the response from the server
+                    InputStream inputStream = urlConnection.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+
+                    String responseLine;
+                    StringBuilder response = new StringBuilder();
+
+                    while ((responseLine = reader.readLine()) != null) {
+                        response.append(responseLine);
+                    }
+
+                    // Return the response as a string
+                    return response.toString();
+
+                } finally {
+                    urlConnection.disconnect();
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error deleting item: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Handle the result as needed
+            if (result!=null && result.contains("success")) {
+                Log.d(TAG, "Item deleted successfully");
+                // You might want to notify the user or update your UI accordingly
+            } else {
+                Log.e(TAG, "Failed to delete item");
+                // Handle the case when deleting the item fails
+            }
         }
     }
 

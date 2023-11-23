@@ -2,21 +2,16 @@ package comumer.i200784;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.ImageFormat;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CaptureRequest;
-import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.view.Surface;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,11 +29,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import android.Manifest;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -88,7 +87,7 @@ public class ItemActivity extends AppCompatActivity {
         city.setAdapter(cityAdapter);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        userId = mAuth.getUid();
+        userId = User.currentUser.getUid();
 
         // Close screen icon
         TextView homeIcn = findViewById(R.id.nav_back);
@@ -166,6 +165,7 @@ public class ItemActivity extends AppCompatActivity {
                 videoUploadTask.addOnSuccessListener(taskSnapshot1 -> {
                     videoRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
                         String videoUrl = uri1.toString();
+                        Log.i("uploaded", imageUrl);
                         storeItemDetails(itemName, itemDesc, itemCity, itemRate, imageUrl, videoUrl);
                     });
                 });
@@ -176,35 +176,36 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     private void storeItemDetails(String itemName, String itemDesc, String itemCity, String itemRate, String imageUrl, String videoUrl) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("items").document();
+        try {
+            // Create a JSON object
+            JSONObject itemData = new JSONObject();
+            itemData.put("item_name", itemName);
+            itemData.put("item_desc", itemDesc);
+            itemData.put("item_city", itemCity);
+            itemData.put("item_rate", itemRate);
+            itemData.put("poster_uid", userId);
+            itemData.put("image_url", imageUrl);
+            itemData.put("video_url", videoUrl);
+            itemData.put("renter_uid", " ");
 
-        Map<String, Object> itemData = new HashMap<>();
-        itemData.put("itemName", itemName);
-        itemData.put("itemDesc", itemDesc);
-        itemData.put("itemCity", itemCity);
-        itemData.put("itemRate", itemRate);
-        itemData.put("posterUid", userId);
-        itemData.put("imageUrl", imageUrl);
-        itemData.put("videoUrl", videoUrl);
-        itemData.put("renterUid"," ");
-        // Get the current date
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
-// Format the current date
-        String formattedDate = dateFormat.format(currentDate);
-// Now, you can put the formatted date into your itemData
-        itemData.put("itemDate", formattedDate);
+            // Get the current date
+            Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+            // Format the current date
+            String formattedDate = dateFormat.format(currentDate);
+            // Now, you can put the formatted date into your itemData
+            itemData.put("itemDate", formattedDate);
 
-        docRef.set(itemData)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(ItemActivity.this, "Item posted successfully.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ItemActivity.this, WelcomeActivityActivity.class);
-                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(ItemActivity.this, "Failed to post the item. Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+            // Execute AsyncTask to post data
+
+            Log.i("data",itemData.toString());
+
+            new PostDataTask().execute(itemData.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(ItemActivity.this, "Failed to create JSON object.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -224,5 +225,75 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
+
+    public class PostDataTask extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                // Your PHP endpoint URL
+                URL url = new URL(Utility.ip+"/SPOT-IT/insertItems.php");
+
+                // Create connection
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+
+                // Convert parameters to JSON
+                String postData = params[0];
+
+                Log.i("post data", postData);
+
+                // Write data to the connection
+                OutputStream os = connection.getOutputStream();
+                os.write(postData.getBytes("UTF-8"));
+                os.flush();
+                os.close();
+
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                return response.toString();
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result!=null && result.contains("success")) {
+                Toast.makeText(ItemActivity.this, "Item posted successfully.", Toast.LENGTH_SHORT).show();
+            } else if(result!=null) {
+                Toast.makeText(ItemActivity.this, "Failed to post the item.", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(ItemActivity.this, "null response.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        private String getPostDataString(Map<String, Object> params) throws Exception {
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                if (postData.length() != 0) {
+                    postData.append('&');
+                }
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(param.getValue());
+            }
+            return postData.toString();
+        }
+    }
 
 }

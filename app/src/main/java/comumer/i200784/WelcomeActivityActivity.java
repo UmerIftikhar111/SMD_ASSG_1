@@ -1,9 +1,11 @@
 package comumer.i200784;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,6 +20,16 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,81 +107,173 @@ public class WelcomeActivityActivity extends AppCompatActivity{
 
 
     private void fetchAllItemsFromFirestore() {
-        // Initialize Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Call the AsyncTask to fetch items
+        new FetchItemsTask().execute(Utility.ip+"/SPOT-IT/getItems.php");
 
-        // Reference to the "items" collection
-        CollectionReference itemsRef = db.collection("items");
-
-        itemsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<Advertisement> itemList = new ArrayList<>();
-            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-
-                Advertisement ad = new Advertisement();
-                ad.setName(document.get("itemName").toString());
-                ad.setDate(document.get("itemDate").toString());
-                ad.setLocation(document.get("itemCity").toString());
-                ad.setRate(Double.parseDouble(document.get("itemRate").toString()));
-                ad.setDescription(document.get("itemDesc").toString());
-                ad.setPictureUrl(document.get("imageUrl").toString());
-                ad.setPosterUid(document.get("posterUid").toString());
-                ad.setRenterUid(document.get("renterUid").toString());
-
-                ad.setItemUid(document.getId());
-
-                itemList.add(ad);
-            }
-
-            Toast.makeText(this, "Fetched item docs", Toast.LENGTH_SHORT).show();
-            // Update the adapter with the fetched itemList
-            adAdapter.setItemList(itemList);
-            adAdapter.notifyDataSetChanged();
-        }).addOnFailureListener(e -> {
-            String errorMessage = "Failed to fetch data from Firestore. Please try again later.";
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-        });
     }
 
     private void fetchMyItemsFromFirestore() {
-        // Initialize Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Reference to the "items" collection
-        CollectionReference itemsRef = db.collection("items");
-
-        itemsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<Advertisement> itemList = new ArrayList<>();
-            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-
-                if(document.get("posterUid").toString().equals(User.currentUser.getUid()) ||
-                        document.get("renterUid").toString().equals(User.currentUser.getUid()) ){
-                    Advertisement ad = new Advertisement();
-                    ad.setName(document.get("itemName").toString());
-                    ad.setDate(document.get("itemDate").toString());
-                    ad.setLocation(document.get("itemCity").toString());
-                    ad.setRate(Double.parseDouble(document.get("itemRate").toString()));
-                    ad.setDescription(document.get("itemDesc").toString());
-                    ad.setPictureUrl(document.get("imageUrl").toString());
-                    ad.setPosterUid(document.get("posterUid").toString());
-                    ad.setRenterUid(document.get("renterUid").toString());
-
-                    ad.setItemUid(document.getId());
-
-                    itemList.add(ad);
-                }
-
-
-            }
-
-            Toast.makeText(this, "Fetched item docs", Toast.LENGTH_SHORT).show();
-            // Update the adapter with the fetched itemList
-            adAdapterForPersonalAds.setItemList(itemList);
-            adAdapterForPersonalAds.notifyDataSetChanged();
-        }).addOnFailureListener(e -> {
-            String errorMessage = "Failed to fetch data from Firestore. Please try again later.";
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-        });
+        new FetchMyItemsTask().execute(Utility.ip+"/SPOT-IT/getItemsbyId.php");
     }
 
+
+    public class FetchItemsTask extends AsyncTask<String, Void, List<Advertisement>> {
+
+        private static final String TAG = "FetchItemsTask";
+
+
+        @Override
+        protected List<Advertisement> doInBackground(String... params) {
+            List<Advertisement> itemList = new ArrayList<>();
+
+            try {
+                URL url = new URL(params[0]); // Your getItems.php endpoint URL
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+
+                    // Parse the JSON response
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+
+                    int status = jsonResponse.getInt("status");
+
+                    if (status == 1) {
+                        JSONArray itemsArray = jsonResponse.getJSONArray("items");
+
+                        for (int i = 0; i < itemsArray.length(); i++) {
+                            JSONObject itemObject = itemsArray.getJSONObject(i);
+
+                            Advertisement ad = new Advertisement();
+                            ad.setItemUid(itemObject.getString("item_id"));
+                            ad.setPictureUrl(itemObject.getString("image_url"));
+                            ad.setLocation(itemObject.getString("item_city"));
+                            ad.setDate(itemObject.getString("item_date"));
+                            ad.setDescription(itemObject.getString("item_desc"));
+                            ad.setName(itemObject.getString("item_name"));
+                            ad.setRate(Double.parseDouble(itemObject.getString("item_rate")));
+                            ad.setPosterUid(itemObject.getString("poster_uid"));
+                            ad.setRenterUid(itemObject.getString("renter_uid"));
+
+
+                            itemList.add(ad);
+                        }
+                    }
+                } finally {
+                    urlConnection.disconnect();
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error fetching items: " + e.getMessage());
+            }
+
+            return itemList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Advertisement> result) {
+            if (result != null) {
+                adAdapter.setItemList(result);
+                adAdapter.notifyDataSetChanged();
+            }
+        }
+
+
+    }
+
+
+    public class FetchMyItemsTask extends AsyncTask<String, Void, List<Advertisement>> {
+
+        private static final String TAG = "FetchMyItemsTask";
+
+
+        @Override
+        protected List<Advertisement> doInBackground(String... params) {
+            List<Advertisement> itemList = new ArrayList<>();
+
+            try {
+                URL url = new URL(params[0]); // Your getItems.php endpoint URL
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                try {
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+
+                    // Create the JSON object for the user ID
+                    JSONObject jsonUserId = new JSONObject();
+                    jsonUserId.put("poster_uid", User.currentUser.getUid());
+
+                    // Write the JSON object to the request body
+                    OutputStream outputStream = urlConnection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    writer.write(jsonUserId.toString());
+                    writer.flush();
+                    writer.close();
+                    outputStream.close();
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+
+                    // Parse the JSON response
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+
+                    int status = jsonResponse.getInt("status");
+
+                    if (status == 1) {
+                        JSONArray itemsArray = jsonResponse.getJSONArray("items");
+
+                        for (int i = 0; i < itemsArray.length(); i++) {
+                            JSONObject itemObject = itemsArray.getJSONObject(i);
+
+                            Advertisement ad = new Advertisement();
+                            ad.setItemUid(itemObject.getString("item_id"));
+                            ad.setPictureUrl(itemObject.getString("image_url"));
+                            ad.setLocation(itemObject.getString("item_city"));
+                            ad.setDate(itemObject.getString("item_date"));
+                            ad.setDescription(itemObject.getString("item_desc"));
+                            ad.setName(itemObject.getString("item_name"));
+                            ad.setRate(Double.parseDouble(itemObject.getString("item_rate")));
+                            ad.setPosterUid(itemObject.getString("poster_uid"));
+                            ad.setRenterUid(itemObject.getString("renter_uid"));
+
+
+                            itemList.add(ad);
+                        }
+                    }
+                } finally {
+                    urlConnection.disconnect();
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error fetching items: " + e.getMessage());
+            }
+
+            return itemList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Advertisement> result) {
+            if (result != null) {
+                adAdapterForPersonalAds.setItemList(result);
+                adAdapterForPersonalAds.notifyDataSetChanged();
+            }
+        }
+
+
+    }
 
 }
