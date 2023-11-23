@@ -3,6 +3,7 @@ package comumer.i200784;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,18 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -48,11 +61,16 @@ public class ProfileActivity extends AppCompatActivity {
         items_posted.setText(User.currentUser.getItemsPosted()+" items posted");
         items_rented.setText(User.currentUser.getItemsRented()+" items rented");
 
+
+
         if (User.currentUser.getMainProfileUrl() != null) {
             String profileUrl = User.currentUser.getMainProfileUrl();
-            if(profileUrl!="")
-            Picasso.get().load(profileUrl).into(profile_pic);
+            if(profileUrl!=""){
+                Picasso.get().load(profileUrl).into(profile_pic);
+            }
         }
+
+
 
         if (!User.currentUser.getCoverProfileUrl().isEmpty()) {
             String coverUrl = User.currentUser.getCoverProfileUrl();
@@ -113,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     // ...
     private void uploadImageToStorage(Uri imageUri, int requestCode) {
-        String uid = mAuth.getCurrentUser().getUid();
+        String uid = User.currentUser.getUid();
 
         StorageReference imageRef = storageRef.child("images/" + uid + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 
@@ -122,6 +140,16 @@ public class ProfileActivity extends AppCompatActivity {
             // Image uploaded successfully
             // Get the download URL for the uploaded image
             imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+
+                if(requestCode==1){
+                    User.currentUser.setMainProfileUrl(downloadUri.toString());
+                    Picasso.get().load(downloadUri.toString()).into(profile_pic);
+                }else if(requestCode==2){
+                    User.currentUser.setCoverProfileUrl(downloadUri.toString());
+                    Picasso.get().load(downloadUri.toString()).into(cover_pic);
+                }
+
+
                 // Update the user's Firestore document with the download URL
                 updateProfileImageInFirestore(downloadUri.toString(), requestCode);
             }).addOnFailureListener(e -> {
@@ -138,28 +166,159 @@ public class ProfileActivity extends AppCompatActivity {
         String fieldToUpdate;
 
         if(requestCode == 1){
-            fieldToUpdate="mainProfileUrl";
+            new UpdateProfileImageTask().execute(downloadUrl);
         }else if(requestCode == 2){
-            fieldToUpdate="coverProfileUrl";
+            new UpdateCoverImageTask().execute(downloadUrl);
         } else {
             fieldToUpdate = "img";
         }
-
-        DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getUid());
-        userRef.update(fieldToUpdate, downloadUrl)
-                .addOnSuccessListener(aVoid -> {
-                    // Successfully updated Firestore document
-                    // Set the image in the ImageView
-                    if ( fieldToUpdate=="profileImageUrl") {
-                        Picasso.get().load(downloadUrl).into(profile_pic);
-                    } else if(fieldToUpdate=="coverImageUrl") {
-                        Picasso.get().load(downloadUrl).into(cover_pic);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle the error when updating Firestore document
-                    Toast.makeText(ProfileActivity.this, "Failed to update Firestore document", Toast.LENGTH_SHORT).show();
-                });
     }
+
+
+    private class UpdateProfileImageTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String apiUrl = Utility.ip + "/SPOT-IT/updateProfilePic.php";
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoOutput(true);
+
+                // Create JSON object
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("userUid", User.currentUser.getUid());
+                jsonParam.put("profilePicUrl", params[0]); // The image URL
+
+                // Write JSON data to the request body
+                OutputStream outputStream = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+                outputStream.close();
+
+                // Read the response from the server
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                String res = response.toString();
+                if(res.contains("success")){
+
+                }
+
+                // Return the response as a string
+                return response.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if (response != null) {
+
+                if (response.contains("success")) {
+                    Toast.makeText(ProfileActivity.this, "Profile pic update success ", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Registration failed, show an error message
+                    Toast.makeText(ProfileActivity.this, "Profile pic update failed: "+response, Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            } else {
+                Toast.makeText(ProfileActivity.this, "Profile pic update failed: Invalid response ", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
+    private class UpdateCoverImageTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String apiUrl = Utility.ip + "/SPOT-IT/updateCoverPic.php";
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoOutput(true);
+
+                // Create JSON object
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("userUid", User.currentUser.getUid());
+                jsonParam.put("coverProfileUrl", params[0]); // The image URL
+
+                // Write JSON data to the request body
+                OutputStream outputStream = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+                outputStream.close();
+
+                // Read the response from the server
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                // Return the response as a string
+                return response.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if (response != null) {
+
+                if (response.contains("success")) {
+                    Toast.makeText(ProfileActivity.this, "Profile pic update success ", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Registration failed, show an error message
+                    Toast.makeText(ProfileActivity.this, "Profile pic update failed: "+response, Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            } else {
+                Toast.makeText(ProfileActivity.this, "Profile pic update failed: Invalid response ", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
 
 }

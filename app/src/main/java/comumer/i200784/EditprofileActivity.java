@@ -1,6 +1,7 @@
 package comumer.i200784;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 public class EditprofileActivity extends AppCompatActivity {
 
@@ -45,28 +61,23 @@ public class EditprofileActivity extends AppCompatActivity {
             String updatedCity = city.getText().toString().trim();
 
             // Get the current user's UID
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            String userUid = mAuth.getCurrentUser().getUid();
+            String userUid = User.currentUser.getUid();
 
-            // Update the user's document in Firestore
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("users").document(userUid)
-                    .update("name", updatedName, "contact", updatedContact, "country", updatedCountry, "city", updatedCity)
-                    .addOnSuccessListener(aVoid -> {
+            // Create JSON object for the request body
+            JSONObject requestBody = new JSONObject();
+            try {
+                requestBody.put("userUid", userUid);
+                requestBody.put("updatedName", updatedName);
+                requestBody.put("updatedContact", updatedContact);
+                requestBody.put("updatedCountry", updatedCountry);
+                requestBody.put("updatedCity", updatedCity);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-                        User updatedUser = new User(updatedName, User.currentUser.getEmail(), updatedContact, updatedCountry, updatedCity );
-                        User.currentUser=updatedUser;
+            // Execute AsyncTask to update the profile
+            new UpdateProfileTask().execute(requestBody.toString());
 
-                        // Profile updated successfully
-                        Toast.makeText(EditprofileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
-                        // Redirect back to the profile screen
-                        Intent intent = new Intent(EditprofileActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle the error, e.g., display an error message
-                        Toast.makeText(EditprofileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
-                    });
         });
 
         // nav text view
@@ -77,4 +88,75 @@ public class EditprofileActivity extends AppCompatActivity {
         });
 
     }
+
+
+    // AsyncTask to perform the network operation in the background
+    private class UpdateProfileTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            // Specify the URL of your PHP endpoint
+            String updateProfileUrl = Utility.ip + "/SPOT-IT/updateProfile.php";
+
+            try {
+                URL url = new URL(updateProfileUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoOutput(true);
+
+                // Write JSON data to the request body
+                OutputStream outputStream = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                writer.write(params[0]);
+                writer.flush();
+                writer.close();
+                outputStream.close();
+
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                return response.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+            handleUpdateResponse(response);
+        }
+
+        private void handleUpdateResponse(String response) {
+            if (response != null) {
+
+                if (response.contains("success")) {
+                    Toast.makeText(EditprofileActivity.this, "Profile update success ", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditprofileActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Registration failed, show an error message
+                    Toast.makeText(EditprofileActivity.this, "Profile update failed: "+response, Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            } else {
+                Toast.makeText(EditprofileActivity.this, "Profile update failed: Invalid response ", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
 }

@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task3 -> {
                     if (task3.isSuccessful()) {
                         String token = task3.getResult();
-                        User.currentUser.setFCMToken(token);
+                       // User.currentUser.setFCMToken(token);
                     }
                 });
 
