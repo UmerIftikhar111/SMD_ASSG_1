@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_LEFT_MESSAGE = 1;
@@ -39,7 +40,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
 
     public MessageAdapter(Context context, List<MessageModel> messageList) {
-        currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currentUserId=User.currentUser.getUid();
         this.context = context;
         this.messageList=messageList;
     }
@@ -84,7 +85,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Bind data for left message view
                 LeftMessageViewHolder leftMessageViewHolder = (LeftMessageViewHolder) holder;
                 leftMessageViewHolder.receiverMessageBody.setText(message.getMessage());
-                leftMessageViewHolder.receiverTime.setText(message.getTime());
+                // Parse the input date string
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date date;
+                try {
+                    date = inputFormat.parse(message.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    // Handle the parse exception if needed
+                    return;
+                }
+
+                // Format the date to display only the time part
+                SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                String formattedTime = outputFormat.format(date);
+
+                // Set the formatted time in your TextView
+                leftMessageViewHolder.receiverTime.setText(formattedTime);
                 if(message.getSenderProfileUrl()!=null && !message.getSenderProfileUrl().isEmpty())
                     Picasso.get().load(message.getSenderProfileUrl()).into(leftMessageViewHolder.receiver_profile_icon);
 
@@ -92,7 +109,22 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Bind data for right message view
                 RightMessageViewHolder rightMessageViewHolder = (RightMessageViewHolder) holder;
                 rightMessageViewHolder.senderMessageBody.setText(message.getMessage());
-                rightMessageViewHolder.senderTime.setText(message.getTime());
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date date;
+                try {
+                    date = inputFormat.parse(message.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    // Handle the parse exception if needed
+                    return;
+                }
+
+                // Format the date to display only the time part
+                SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                String formattedTime = outputFormat.format(date);
+
+                // Set the formatted time in your TextView
+                rightMessageViewHolder.senderTime.setText(formattedTime);
 
                 rightMessageViewHolder.senderMessageBody.setOnLongClickListener(view -> {
                     showDeleteConfirmationDialog(message); // Pass the appropriate message here

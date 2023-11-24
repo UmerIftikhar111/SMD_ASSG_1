@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -37,12 +38,22 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -71,7 +82,45 @@ public class ChatDetailsActivity extends AppCompatActivity {
     private Uri selectedImageUri;
     private ScreenshotObserver screenshotObserver;
     Context context;
+    RecyclerView recyclerView;
     public static String senderUid, receiverUid, receiverProfileUrl;
+    Handler handler = new Handler();
+    int intervalMilliseconds = 2000;
+
+    public void fetchMessagesPeriodically() {
+        // Clear the existing messages
+        messageList.clear();
+        messageAdapter = new MessageAdapter(this, messageList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(messageAdapter);
+
+        // Execute the GetMessageTask to get messages
+        new GetMessageTask(messageAdapter.getMessageList()) {
+            @Override
+            protected void onMessagesLoaded(List<MessageModel> messages) {
+                // Update the UI or perform any action after messages are loaded
+                messageAdapter.notifyDataSetChanged();
+            }
+        }.execute(senderUid, receiverUid);
+
+        // Schedule the next execution after the specified interval
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fetchMessagesPeriodically();
+            }
+        }, intervalMilliseconds);
+    }
+
+    // To start the periodic updates, call this function
+    private void startMessageUpdates() {
+        fetchMessagesPeriodically();
+    }
+
+    // To stop the periodic updates, call this function
+    private void stopMessageUpdates() {
+        handler.removeCallbacksAndMessages(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +148,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
         contactName.setText(getIntent().getStringExtra("receiverUsername"));
 
-
         messageAdapter = new MessageAdapter(this, messageList);
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewChat);
+        recyclerView = findViewById(R.id.recyclerViewChat);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(messageAdapter);
 
@@ -112,76 +160,64 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
         receiverUid = getIntent().getStringExtra("receiverUid");
         receiverProfileUrl = getIntent().getStringExtra("receiverProfileUrl");
-        senderUid = firebaseAuth.getCurrentUser().getUid();
+        senderUid = User.currentUser.getUid();
 
-        DatabaseReference userStatusRef = FirebaseDatabase.getInstance().getReference("all-users/" + receiverUid + "/status");
-        userStatusRef.addValueEventListener(new ValueEventListener() {
+
+        new GetMessageTask(messageList) {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the user's status (online or offline)
-                Boolean isOnline = dataSnapshot.getValue(Boolean.class);
-                if (isOnline != null && isOnline) { status.setText("Online");}
-                else { status.setText("Offline");}
+            protected void onMessagesLoaded(List<MessageModel> messageList) {
+                // Update the UI or perform any action after messages are loaded
+                messageAdapter.notifyDataSetChanged(); // Assuming messageAdapter is already initialized
             }
-            @Override
-            public void onCancelled(DatabaseError error) {}
-        });
+        }.execute(senderUid, receiverUid);
 
-
-        DatabaseReference messagesRef = databaseReference.child("chats");
-        messagesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Clear the current message list to avoid duplications
-                messageList.clear();
-
-                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    // Parse the message data and add it to your message list
-                    MessageModel message = messageSnapshot.getValue(MessageModel.class);
-                    // Check if the message meets either of the conditions
-                    if ((message.getSenderUid().equals(senderUid) && message.getReceiverUid().equals(receiverUid)) ||
-                            (message.getSenderUid().equals(receiverUid) && message.getReceiverUid().equals(senderUid))) {
-
-                        if(senderUid.equals(message.getReceiverUid())){
-                            message.setReadStatus("true");
-                            // Update the message in the database with the new readStatus
-                            String messageId = messageSnapshot.getKey();
-                            messagesRef.child(messageId).setValue(message);
-                        }
-
-                        messageList.add(message);
-                        }
-                }
-                // Notify the adapter that the data has changed
-                messageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle any errors or failure to fetch messages
-                Toast.makeText(ChatDetailsActivity.this, "Error fetching messages: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         send.setOnClickListener(v -> {
-            // Get the message text from the EditText
-            String message = messageText.getText().toString().trim();
+            // Inside your ChatDetailsActivity class
 
-            if (!message.isEmpty()) {
-                // Create a message object
-                MessageModel messageModel = new MessageModel(senderUid, receiverUid, message,"text");
-                messageModel.setSenderProfileUrl(receiverProfileUrl);
-                // Generate a unique key for the message
-                String messageKey = databaseReference.child("chats").push().getKey();
-                // Store the message in the Realtime Database under the 'chats' node
-                databaseReference.child("chats").child(messageKey).setValue(messageModel);
-                // Clear the message input field
-                messageText.setText("");
-                sendNotification(message,receiverUid, senderUid, User.currentUser.getName());
-                Toast.makeText(this, "Message sent!", Toast.LENGTH_SHORT).show();
-            }else
-                Toast.makeText(this, "Please enter a message to send.", Toast.LENGTH_SHORT).show();
+            send.setOnClickListener(task -> {
+                // Get the message text from the EditText
+                String message = messageText.getText().toString().trim();
+
+                if (!message.isEmpty()) {
+                    // Execute the AsyncTask to send the message
+                    new SendMessageTask() {
+                        @Override
+                        protected void onMessageSent(String message) {
+                            // Handle the result, e.g., show a toast
+                            Toast.makeText(ChatDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }.execute(senderUid, receiverUid, message, receiverProfileUrl, "text");
+
+                    messageList.clear();
+                    messageAdapter = new MessageAdapter(this, messageList);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    recyclerView.setAdapter(messageAdapter);
+
+                    new GetMessageTask(messageList) {
+                        @Override
+                        protected void onMessagesLoaded(List<MessageModel> messageList) {
+                            // Update the UI or perform any action after messages are loaded
+                            messageAdapter.notifyDataSetChanged(); // Assuming messageAdapter is already initialized
+                        }
+                    }.execute(senderUid, receiverUid);
+
+                    // Clear the message input field
+                    messageText.setText("");
+                    sendNotification(message, receiverUid, senderUid, User.currentUser.getName());
+                } else {
+                    Toast.makeText(ChatDetailsActivity.this, "Please enter a message to send.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         });
+
+        startMessageUpdates();
+
+
+
+
+
 
         send_picture.setOnClickListener(v -> {
             // Open the image gallery
@@ -294,10 +330,15 @@ public class ChatDetailsActivity extends AppCompatActivity {
         // Now that you have the image URL, you can send it as a message
         MessageModel messageModel = new MessageModel(senderUid, receiverUid, imageUrl, "img");
         messageModel.setSenderProfileUrl(receiverProfileUrl);
-        // Generate a unique key for the message
-        String messageKey = databaseReference.child("chats").push().getKey();
-        // Store the message in the Realtime Database under the 'chats' node
-        databaseReference.child("chats").child(messageKey).setValue(messageModel);
+
+        new SendMessageTask() {
+            @Override
+            protected void onMessageSent(String message) {
+                // Handle the result, e.g., show a toast
+                Toast.makeText(ChatDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        }.execute(senderUid, receiverUid, imageUrl, receiverProfileUrl, "img");
+
         sendNotification("Image",receiverUid, senderUid, User.currentUser.getName());
         Toast.makeText(this, "Message Sent!", Toast.LENGTH_SHORT).show();
     }
@@ -373,10 +414,214 @@ public class ChatDetailsActivity extends AppCompatActivity {
     }
 
 
+    public abstract class SendMessageTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String apiUrl = Utility.ip+"/SPOT-IT/insertMsg.php";
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+
+                // Create JSON object with message details
+                JSONObject jsonInput = new JSONObject();
+                jsonInput.put("senderUid", params[0]);
+                jsonInput.put("receiverUid", params[1]);
+                jsonInput.put("message", params[2]);
+                String formattedTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                jsonInput.put("time", formattedTime);
+                jsonInput.put("senderProfileUrl", params[3]);
+                jsonInput.put("messageType", params[4]);
+
+                // Write the JSON object to the request body
+                OutputStream os = connection.getOutputStream();
+                os.write(jsonInput.toString().getBytes());
+                os.flush();
+                os.close();
+
+
+                // Read response from the server
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                return result.toString();
+
+
+
+            } catch (Exception e) {
+                Log.e("SendMessageTask", "Error sending message: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                parseJson(result);
+            } else {
+                Log.e("SendMessageTask", "Error: result is null");
+            }
+        }
+
+        private String readResponse(java.io.InputStream is) throws java.io.IOException {
+            java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+            return s.hasNext() ? s.next() : "";
+        }
+
+        private void parseJson(String result) {
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                int status = jsonResponse.getInt("status");
+
+                if (status == 1) {
+                    // Message sent successfully
+                    Toast.makeText(ChatDetailsActivity.this,"Message sent!", Toast.LENGTH_SHORT).show();
+                    onMessageSent(jsonResponse.getString("msg"));
+                } else {
+                    Log.e("SendMessageTask", "Server returned status: " + status);
+                }
+
+            } catch (Exception e) {
+                Log.e("SendMessageTask", "Error parsing JSON: " + e.getMessage());
+            }
+        }
+
+        // Abstract method to be implemented by the subclasses
+        protected abstract void onMessageSent(String message);
+    }
+
+
+
+    public abstract class GetMessageTask extends AsyncTask<String, Void, String> {
+
+        private List<MessageModel> messageList;
+
+        public GetMessageTask(List<MessageModel> messageList) {
+            this.messageList = messageList;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String senderUid = params[0];
+            String receiverUid = params[1];
+            String apiUrl = Utility.ip+"/SPOT-IT/getSpMsgs.php";
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+
+                // Create JSON object with sender and receiver IDs
+                JSONObject jsonInput = new JSONObject();
+                jsonInput.put("senderUid", senderUid);
+                jsonInput.put("receiverUid", receiverUid);
+
+                connection.getOutputStream().write(jsonInput.toString().getBytes());
+
+                // Read response from the server
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                return result.toString();
+
+            } catch (Exception e) {
+                Log.e("GetMessageTask", "Error retrieving messages: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+
+                List<MessageModel> msgs_to_display = parseJson(result);
+
+
+
+                if(msgs_to_display!=null){
+                    messageAdapter.setMessageList(msgs_to_display);
+                    messageAdapter.notifyDataSetChanged();
+                }
+
+
+
+            } else {
+                Log.e("GetMessageTask", "Error: result is null");
+            }
+        }
+
+        private List<MessageModel> parseJson(String result) {
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                int status = jsonResponse.getInt("status");
+
+                if (status == 1) {
+                    JSONArray messagesArray = jsonResponse.getJSONArray("messages");
+
+                    for (int i = 0; i < messagesArray.length(); i++) {
+                        JSONObject messageObject = messagesArray.getJSONObject(i);
+
+                        MessageModel messageModel = new MessageModel(
+                                messageObject.getString("sender_uid"),
+                                messageObject.getString("receiver_uid"),
+                                messageObject.getString("message_text"),
+                                messageObject.getString("message_type")
+                        );
+                        messageModel.setTime(messageObject.getString("time_sent"));
+                        messageModel.setSenderProfileUrl(messageObject.getString("sender_profile_url"));
+
+                        // Add additional fields as needed (e.g., time_sent, sender_profile_url, read_status)
+
+                        messageList.add(messageModel);
+                    }
+
+                    // Notify any listener that messages are loaded
+                    //onMessagesLoaded(messageList);
+                    return messageList;
+
+                } else {
+                    Log.e("GetMessageTask", "Server returned status: " + status);
+                }
+
+            } catch (Exception e) {
+                Log.e("GetMessageTask", "Error parsing JSON: " + e.getMessage());
+            }
+            return null;
+        }
+
+        // Abstract method to be implemented by the subclasses
+        protected abstract void onMessagesLoaded(List<MessageModel> messageList);
+    }
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopMessageUpdates();
         getContentResolver().unregisterContentObserver(screenshotObserver);
     }
+
+
 
 }
