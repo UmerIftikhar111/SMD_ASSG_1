@@ -7,6 +7,7 @@ public class ChatUser {
     private String profilePictureUrl;
     private String status;
     private int numOfUnreadMessages;
+
     public ChatUser(){}
 
     public ChatUser(String userId, String username, String profilePictureUrl, String status) {
