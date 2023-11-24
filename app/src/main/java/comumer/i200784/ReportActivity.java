@@ -1,6 +1,7 @@
 package comumer.i200784;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +41,6 @@ public class ReportActivity extends AppCompatActivity {
         // Retrieve the item UID from the intent
         String itemUid = getIntent().getStringExtra("itemUid");
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Initialize UI components
         reportBtn = findViewById(R.id.reportBtn);
@@ -37,40 +49,76 @@ public class ReportActivity extends AppCompatActivity {
         // Handle the report button click
         reportBtn.setOnClickListener(view -> {
 
-            String reportReason = reason.getText().toString();
+            ReportActivity.ReviewAsyncTask registerAsyncTask = new ReportActivity.ReviewAsyncTask();
+            registerAsyncTask.execute(User.currentUser.getUid(),reason.getText().toString());
 
-            // Create a new Firestore document under the "reports" collection
-            CollectionReference reportsRef = db.collection("reports");
 
-            // Create a new document and set the fields based on the user's report
-            Map<String, Object> reportData = new HashMap<>();
-            reportData.put("itemUid", itemUid); // Item UID
-            reportData.put("reason", reportReason); // User's reason for the report
-
-            // Add the report document to Firestore
-            reportsRef.add(reportData)
-                    .addOnSuccessListener(documentReference -> {
-                        // Report was successfully added
-                        Toast.makeText(ReportActivity.this, "Reported successfully", Toast.LENGTH_SHORT).show();
-
-                        // Redirect the user to the home page or any desired destination
-                        Intent intent = new Intent(ReportActivity.this, WelcomeActivityActivity.class);
-                        startActivity(intent);
-                        finish(); // Close the ReportActivity
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle the failure to add the report
-                        Toast.makeText(ReportActivity.this, "Failed to report. Please try again later.", Toast.LENGTH_SHORT).show();
-                    });
 
         });
-
-        // nav back arrow icon
-        ImageView navBackArrowIcn = findViewById(R.id.nav_back_to_item_detail);
-        navBackArrowIcn.setOnClickListener(view -> {
-            Intent intent = new Intent(ReportActivity.this, ItemDetailsActivity.class);
-            startActivity(intent);
-        });
-
     }
+    private class ReviewAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String userId = params[0];
+            String comment = params[1];
+
+
+            try {
+                URL url = new URL(Utility.ip + "/SPOT-IT/createReview.php");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+
+                urlConnection.setDoOutput(true);
+
+                OutputStream outputStream = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+
+                // Create JSON object
+                JSONObject jsonParams = new JSONObject();
+                jsonParams.put("user_id", userId);
+                jsonParams.put("comment", comment);
+
+
+
+                writer.write(jsonParams.toString());
+                writer.flush();
+                writer.close();
+                outputStream.close();
+
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String responseLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((responseLine = reader.readLine()) != null) {
+                    response.append(responseLine);
+                }
+
+                return response.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error";
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.contains("success")) {
+                // Registration successful, navigate to the main activity
+                Intent intent = new Intent(ReportActivity.this, WelcomeActivityActivity.class);
+                startActivity(intent);
+            } else {
+                // Registration failed, show an error message
+                Toast.makeText(ReportActivity.this, "Registration failed: "+result, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 }
